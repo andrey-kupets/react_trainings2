@@ -7,10 +7,11 @@ const Header = ({counter}) => {
     return <h1>{counter}</h1>;
 }
 
-const TodoItem = ({todo}) => (
+const TodoItem = ({todo, remove}) => (
     <div>
         {todo.title} <br/>
-        {todo.content}
+        {todo.content} <br/>
+        <button onClick={remove}><b>remove</b></button>
         <hr/>
     </div>
 )
@@ -71,7 +72,14 @@ function App() {
   const removeFirst = () => {
       setState({
           ...state,
-        todos: state.todos.filter((todo, index )=> index !== 0)
+        todos: state.todos.filter((todo, index ) => index !== 0)
+      })
+  }
+
+  const removeTodo = (id) => {
+      setState({
+          ...state,
+          todos: state.todos.filter(todo => todo.id !== id)
       })
   }
 
@@ -83,7 +91,7 @@ function App() {
       <button onClick={toggleHandler}><h3>toggleHeader</h3></button>
       <button onClick={changeTodo}><h3>change todo</h3></button>
       <button onClick={removeFirst}><h3>remove 1st todo</h3></button>
-      {state.todos.map(todo => <TodoItem key={todo.id} todo={todo}/>)}
+      {state.todos.map(todo => <TodoItem key={todo.id} todo={todo} remove={() => removeTodo(todo.id)}/>)}
     </div>
   );
 }
