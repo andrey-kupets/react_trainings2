@@ -51,8 +51,8 @@ function App() {
 
   const changeTodo = () => {
     const newArr = [...state.todos];
-    newArr[1] = {
-        id: newArr[1].id,
+    newArr[0] = {
+        id: newArr[0].id,
         title: Math.random(),
         content: Math.random()
     };
