@@ -60,15 +60,20 @@ function App() {
         ...state,
         todos: newArr
     });
-
     // if ref on initialState isn't changed - NO RENDER - so we copy by ...
       // or in that way:
       // setTodos([...todos])
       // todos = [todos[0], todos[1]];
     //   todos[1] = Math.random();
     //   setTodos(todos);
-
   };
+
+  const removeFirst = () => {
+      setState({
+          ...state,
+        todos: state.todos.filter((todo, index )=> index !== 0)
+      })
+  }
 
   const { counter, headerVisibility, todos } = state;
   return (
@@ -77,6 +82,7 @@ function App() {
       <button onClick={countHandler}><h3>+1</h3></button>
       <button onClick={toggleHandler}><h3>toggleHeader</h3></button>
       <button onClick={changeTodo}><h3>change todo</h3></button>
+      <button onClick={removeFirst}><h3>remove 1st todo</h3></button>
       {state.todos.map(todo => <TodoItem key={todo.id} todo={todo}/>)}
     </div>
   );
