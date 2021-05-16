@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import logo from './logo.svg';
 import './App.css';
 
@@ -7,26 +7,59 @@ const Header = ({counter}) => {
     return <h1>{counter}</h1>;
 }
 
+const TodoItem = ({todo}) => (
+    <div>
+        {todo.title} <br/>
+        {todo.content}
+        <hr/>
+    </div>
+)
+
 function App() {
   console.log('rerender parent');
 
-  const [ counter, setCounter ] = useState(0);
-  const [ headerVisibility, setHeaderVisibility ] = useState(true);
-  const [ todos, setTodos ] = useState([ 'react', 'angular' ]);
+  // const [ counter, setCounter ] = useState(0);
+  // const [ headerVisibility, setHeaderVisibility ] = useState(true);
+  // const [ todos, setTodos ] = useState([
+  //     {id: 1, title: 'react', content: 'text'},
+  //     {id: 2, title: 'angular', content: 'text'},
+  //     {id: 3, title: 'mongo', content: 'text'}]);
+
+  const [ state, setState ] = useState({
+      counter: 0,
+      headerVisibility: true,
+      todos: [
+          {id: 1, title: 'react', content: 'text'},
+          {id: 2, title: 'angular', content: 'text'},
+          {id: 3, title: 'mongo', content: 'text'}]
+  })
 
   const countHandler = () => {
-    setCounter(counter + 1);
-    console.log(counter + 1);
+    setState({
+        ...state,
+        counter: state.counter + 1
+    });
+    console.log(state.counter + 1);
   };
 
   const toggleHandler = () => {
-    setHeaderVisibility(!headerVisibility);
+    setState({
+        ...state,
+        headerVisibility: !state.headerVisibility
+    });
   };
 
   const changeTodo = () => {
-    const newArr = [...todos];
-    newArr[1] = Math.random();
-    setTodos(newArr);
+    const newArr = [...state.todos];
+    newArr[1] = {
+        id: newArr[1].id,
+        title: Math.random(),
+        content: Math.random()
+    };
+    setState({
+        ...state,
+        todos: newArr
+    });
 
     // if ref on initialState isn't changed - NO RENDER - so we copy by ...
       // or in that way:
@@ -37,14 +70,14 @@ function App() {
 
   };
 
+  const { counter, headerVisibility, todos } = state;
   return (
     <div className="App">
       {headerVisibility && <Header counter={counter}/>}
       <button onClick={countHandler}><h3>+1</h3></button>
       <button onClick={toggleHandler}><h3>toggleHeader</h3></button>
       <button onClick={changeTodo}><h3>change todo</h3></button>
-      <div>{todos[0]}</div>
-      <div>{todos[1]}</div>
+      {state.todos.map(todo => <TodoItem key={todo.id} todo={todo}/>)}
     </div>
   );
 }
