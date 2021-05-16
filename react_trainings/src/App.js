@@ -74,12 +74,22 @@ function App() {
           ...state,
         todos: state.todos.filter((todo, index ) => index !== 0)
       })
-  }
+  };
 
   const removeTodo = (id) => {
       setState({
           ...state,
           todos: state.todos.filter(todo => todo.id !== id)
+      })
+  };
+
+  const restoreTodos = () => {
+      setState({
+          ...state,
+          todos: [ // hardcode
+              {id: 1, title: 'react', content: 'text'},
+              {id: 2, title: 'angular', content: 'text'},
+              {id: 3, title: 'mongo', content: 'text'}]
       })
   }
 
@@ -91,6 +101,7 @@ function App() {
       <button onClick={toggleHandler}><h3>toggleHeader</h3></button>
       <button onClick={changeTodo}><h3>change todo</h3></button>
       <button onClick={removeFirst}><h3>remove 1st todo</h3></button>
+      <button onClick={restoreTodos}><h3>restore todos</h3></button>
       {state.todos.map(todo => <TodoItem key={todo.id} todo={todo} remove={() => removeTodo(todo.id)}/>)}
     </div>
   );
