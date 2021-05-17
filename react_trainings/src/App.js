@@ -32,7 +32,8 @@ function App() {
       todos: [
           {id: 1, title: 'react', content: '1'},
           {id: 2, title: 'angular', content: '2'},
-          {id: 3, title: 'mongo', content: '3'}]
+          {id: 3, title: 'mongo', content: '3'}],
+      itemsToHide: [],
   });
 
   const countHandler = () => {
@@ -95,21 +96,33 @@ function App() {
   //     })
   // }
 
-  const removeTodoItem = (todoItem) => {
-      if (todoItem !== 'first' && todoItem !== 'last') return;
-      const newArr = [...state.todos];
-      // todoItem === 'first' && newArr.shift();
-      // todoItem === 'last' && newArr.pop();
-      todoItem === 'first' ? newArr.shift() : newArr.pop();
-      // если в параметрах слайса указан [], то происходит поверхностная копия,
-      // и всё равно, что в этот массив влаживать
-      // const  newArr = [...state.todos].slice('first' ? [0, 1] : [[...state.todos].length, [...state.todos].length - 1]);
-      // todoItem === 'first' ? newArr.shift() : newArr.pop();
+  // const removeTodoItem = (todoItem) => {
+  //     if (todoItem !== 'first' && todoItem !== 'last') return;
+  //     const newArr = [...state.todos];
+  //     // todoItem === 'first' && newArr.shift();
+  //     // todoItem === 'last' && newArr.pop();
+  //     todoItem === 'first' ? newArr.shift() : newArr.pop();
+  //     // если в параметрах слайса указан [], то происходит поверхностная копия,
+  //     // и всё равно, что в этот массив влаживать
+  //     // const  newArr = [...state.todos].slice('first' ? [0, 1] : [[...state.todos].length, [...state.todos].length - 1]);
+  //     // todoItem === 'first' ? newArr.shift() : newArr.pop();
+  //
+  //     setState({
+  //         ...state,
+  //         todos: newArr
+  //     });
+  // };
 
+  const filteredArr = [...state.todos].filter(todo => !state.itemsToHide.includes(todo.id));
+
+  const removeTodoItem = (itemForRemoving) => {
+      const newArr = [...filteredArr];
+      const itemToRemove = itemForRemoving === 'first' ? newArr[0] : newArr[newArr.length-1];
       setState({
           ...state,
-          todos: newArr
+          itemsToHide: [...state.itemsToHide, itemToRemove.id]
       });
+      console.log(state.todos)
   };
 
   const removeTodo = (id) => {
@@ -139,7 +152,9 @@ function App() {
       <button onClick={() => removeTodoItem('first')}><h3>remove 1st todo</h3></button>
       <button onClick={() => removeTodoItem('last')}><h3>remove last todo</h3></button>
       <button onClick={restoreTodos}><h3>restore todos</h3></button>
-      {state.todos.map(todo => <TodoItem key={todo.id} todo={todo} remove={() => removeTodo(todo.id)}/>)}
+      <ul>
+          {filteredArr.map(todo => <li key={todo.id}><TodoItem todo={todo} remove={() => removeTodo(todo.id)}/></li>)}
+      </ul>
     </div>
   );
 };
