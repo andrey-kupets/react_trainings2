@@ -117,11 +117,11 @@ function App() {
 
   const removeTodoItem = (itemForRemoving) => {
       const itemToRemove = itemForRemoving === 'first' ? filteredArr[0] : filteredArr[filteredArr.length-1];
+      if (filteredArr.length === 0) return;
       setState({
           ...state,
           itemsToHide: [...state.itemsToHide, itemToRemove.id]
       });
-      console.log(state.todos)
   };
 
   const removeTodo = (id) => {
