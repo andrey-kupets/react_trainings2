@@ -5,7 +5,7 @@ import './App.css';
 const Header = ({counter}) => {
     console.log('rerender child');
     return <h1>{counter}</h1>;
-}
+};
 
 const TodoItem = ({todo, remove}) => (
     <div>
@@ -14,7 +14,7 @@ const TodoItem = ({todo, remove}) => (
         <button onClick={remove}><b>remove</b></button>
         <hr/>
     </div>
-)
+);
 
 function App() {
   console.log('rerender parent');
@@ -33,10 +33,13 @@ function App() {
           {id: 1, title: 'react', content: 'text'},
           {id: 2, title: 'angular', content: 'text'},
           {id: 3, title: 'mongo', content: 'text'}]
-  })
+  });
 
   const countHandler = () => {
-    setState({
+    setState( {
+        // для сложніх стейтов (стейт - объект)
+        // если не копировать стейт, то тогда мы перезапишем ВЕСЬ стейт (все его поля) на то, что влаживаем
+        // т.е. в данном случае весь объект - перезапишется только на его часть (одно поле)
         ...state,
         counter: state.counter + 1
     });
@@ -65,16 +68,32 @@ function App() {
       // or in that way:
       // setTodos([...todos])
       // todos = [todos[0], todos[1]];
-    //   todos[1] = Math.random();
+    //   todos[1] = Math.random();+-
     //   setTodos(todos);
   };
 
   const removeFirst = () => {
+      // setState({
+      //     ...state,
+      //   todos: state.todos.filter((todo, index ) => index !== 0)
+      // })
+      const newArr = [...state.todos];
+      newArr.shift();
       setState({
           ...state,
-        todos: state.todos.filter((todo, index ) => index !== 0)
+          todos: newArr
       })
   };
+
+  const removeLast = () => {
+      const newArr = [...state.todos];
+      newArr.pop();
+      setState({
+          ...state,
+          // todos: state.todos.filter((todo, index ) => index !== state.todos.length - 1)
+          todos: newArr
+      })
+  }
 
   const removeTodo = (id) => {
       setState({
@@ -91,7 +110,7 @@ function App() {
               {id: 2, title: 'angular', content: 'text'},
               {id: 3, title: 'mongo', content: 'text'}]
       })
-  }
+  };
 
   const { counter, headerVisibility, todos } = state;
   return (
@@ -101,10 +120,11 @@ function App() {
       <button onClick={toggleHandler}><h3>toggleHeader</h3></button>
       <button onClick={changeTodo}><h3>change todo</h3></button>
       <button onClick={removeFirst}><h3>remove 1st todo</h3></button>
+      <button onClick={removeLast}><h3>remove last todo</h3></button>
       <button onClick={restoreTodos}><h3>restore todos</h3></button>
       {state.todos.map(todo => <TodoItem key={todo.id} todo={todo} remove={() => removeTodo(todo.id)}/>)}
     </div>
   );
-}
+};
 
 export default App;
