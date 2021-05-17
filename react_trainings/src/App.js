@@ -116,8 +116,7 @@ function App() {
   const filteredArr = [...state.todos].filter(todo => !state.itemsToHide.includes(todo.id));
 
   const removeTodoItem = (itemForRemoving) => {
-      const newArr = [...filteredArr];
-      const itemToRemove = itemForRemoving === 'first' ? newArr[0] : newArr[newArr.length-1];
+      const itemToRemove = itemForRemoving === 'first' ? filteredArr[0] : filteredArr[filteredArr.length-1];
       setState({
           ...state,
           itemsToHide: [...state.itemsToHide, itemToRemove.id]
