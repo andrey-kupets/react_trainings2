@@ -30,14 +30,14 @@ function App() {
       counter: 0,
       headerVisibility: true,
       todos: [
-          {id: 1, title: 'react', content: 'text'},
-          {id: 2, title: 'angular', content: 'text'},
-          {id: 3, title: 'mongo', content: 'text'}]
+          {id: 1, title: 'react', content: '1'},
+          {id: 2, title: 'angular', content: '2'},
+          {id: 3, title: 'mongo', content: '3'}]
   });
 
   const countHandler = () => {
     setState( {
-        // для сложніх стейтов (стейт - объект)
+        // для сложных стейтов (стейт - объект)
         // если не копировать стейт, то тогда мы перезапишем ВЕСЬ стейт (все его поля) на то, что влаживаем
         // т.е. в данном случае весь объект - перезапишется только на его часть (одно поле)
         ...state,
@@ -72,28 +72,45 @@ function App() {
     //   setTodos(todos);
   };
 
-  const removeFirst = () => {
-      // setState({
-      //     ...state,
-      //   todos: state.todos.filter((todo, index ) => index !== 0)
-      // })
-      const newArr = [...state.todos];
-      newArr.shift();
-      setState({
-          ...state,
-          todos: newArr
-      })
-  };
+  // const removeFirst = () => {
+  //     // setState({
+  //     //     ...state,
+  //     //   todos: state.todos.filter((todo, index ) => index !== 0)
+  //     // })
+  //     const newArr = [...state.todos];
+  //     newArr.shift();
+  //     setState({
+  //         ...state,
+  //         todos: newArr
+  //     })
+  // };
+  //
+  // const removeLast = () => {
+  //     const newArr = [...state.todos];
+  //     newArr.pop();
+  //     setState({
+  //         ...state,
+  //         // todos: state.todos.filter((todo, index ) => index !== state.todos.length - 1)
+  //         todos: newArr
+  //     })
+  // }
 
-  const removeLast = () => {
+  const removeTodoItem = (todoItem) => {
+      if (todoItem !== 'first' && todoItem !== 'last') return;
       const newArr = [...state.todos];
-      newArr.pop();
+      // todoItem === 'first' && newArr.shift();
+      // todoItem === 'last' && newArr.pop();
+      todoItem === 'first' ? newArr.shift() : newArr.pop();
+      // если в параметрах слайса указан [], то происходит поверхностная копия,
+      // и всё равно, что в этот массив влаживать
+      // const  newArr = [...state.todos].slice('first' ? [0, 1] : [[...state.todos].length, [...state.todos].length - 1]);
+      // todoItem === 'first' ? newArr.shift() : newArr.pop();
+
       setState({
           ...state,
-          // todos: state.todos.filter((todo, index ) => index !== state.todos.length - 1)
           todos: newArr
-      })
-  }
+      });
+  };
 
   const removeTodo = (id) => {
       setState({
@@ -106,9 +123,9 @@ function App() {
       setState({
           ...state,
           todos: [ // hardcode
-              {id: 1, title: 'react', content: 'text'},
-              {id: 2, title: 'angular', content: 'text'},
-              {id: 3, title: 'mongo', content: 'text'}]
+              {id: 1, title: 'react', content: '1'},
+              {id: 2, title: 'angular', content: '2'},
+              {id: 3, title: 'mongo', content: '3'}]
       })
   };
 
@@ -119,8 +136,8 @@ function App() {
       <button onClick={countHandler}><h3>+1</h3></button>
       <button onClick={toggleHandler}><h3>toggleHeader</h3></button>
       <button onClick={changeTodo}><h3>change todo</h3></button>
-      <button onClick={removeFirst}><h3>remove 1st todo</h3></button>
-      <button onClick={removeLast}><h3>remove last todo</h3></button>
+      <button onClick={() => removeTodoItem('first')}><h3>remove 1st todo</h3></button>
+      <button onClick={() => removeTodoItem('last')}><h3>remove last todo</h3></button>
       <button onClick={restoreTodos}><h3>restore todos</h3></button>
       {state.todos.map(todo => <TodoItem key={todo.id} todo={todo} remove={() => removeTodo(todo.id)}/>)}
     </div>
