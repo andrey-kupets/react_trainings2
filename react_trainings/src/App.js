@@ -134,10 +134,11 @@ function App() {
   const restoreTodos = () => {
       setState({
           ...state,
-          todos: [ // hardcode
-              {id: 1, title: 'react', content: '1'},
-              {id: 2, title: 'angular', content: '2'},
-              {id: 3, title: 'mongo', content: '3'}]
+          // todos: [ // hardcode
+          //     {id: 1, title: 'react', content: '1'},
+          //     {id: 2, title: 'angular', content: '2'},
+          //     {id: 3, title: 'mongo', content: '3'}]
+          itemsToHide: []
       })
   };
 
