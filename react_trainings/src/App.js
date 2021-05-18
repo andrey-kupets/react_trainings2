@@ -125,12 +125,22 @@ function App() {
       });
   };
 
-  const removeTodo = (id) => {
-      setState({
-          ...state,
-          todos: state.todos.filter(todo => todo.id !== id)
-      })
-  };
+  // const removeTodo = (id) => {
+  //     setState({
+  //         ...state,
+  //         todos: state.todos.filter(todo => todo.id !== id)
+  //     })
+  // };
+
+    const removeTodo2 = (itemForRemoving) => {
+        // const itemToRemove = itemForRemoving === 'first' ? filteredArr[0] : filteredArr[filteredArr.length-1];
+        // if (filteredArr.length === 0) return;
+        if (!itemForRemoving) return;
+        setState({
+            ...state,
+            itemsToHide: [...state.itemsToHide, itemForRemoving.id]
+        });
+    };
 
   const restoreTodos = () => {
       setState({
@@ -154,7 +164,8 @@ function App() {
       <button onClick={() => removeTodoItem('last')}><h3>remove last todo</h3></button>
       <button onClick={restoreTodos}><h3>restore todos</h3></button>
       <ul>
-          {filteredArr.map(todo => <li key={todo.id}><TodoItem todo={todo} remove={() => removeTodo(todo.id)}/></li>)}
+          {/*{filteredArr.map(todo => <li key={todo.id}><TodoItem todo={todo} remove={() => removeTodo(todo.id)}/></li>)}*/}
+          {filteredArr.map(todo => <li key={todo.id}><TodoItem todo={todo} remove={() => removeTodo2(todo)}/></li>)}
       </ul>
     </div>
   );
