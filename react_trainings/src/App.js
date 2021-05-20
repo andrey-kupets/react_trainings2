@@ -175,22 +175,39 @@ import './App.css';
 //2. componentDidMount, DidUpdate, WillUnmount
 // useEffect
 
-class Child extends Component {
-    componentDidMount() {
+// class Child extends Component {
+//     componentDidMount() {
+//         console.log('child mount');
+//     }
+//
+//     componentWillUnmount() {
+//         console.log('no child render more');
+//     }
+//
+//     render() {
+//         return (
+//             <>
+//                 <h3>child</h3>
+//             </>
+//         );
+//     }
+// }
+
+
+const Child =() => {
+
+    //REMEMBER return in useEffect === WillUnmount
+    useEffect(() => {
         console.log('child mount');
-    }
 
-    componentWillUnmount() {
-        console.log('no child render more');
-    }
+        return () => console.log('no child render more');
+    },[]);
 
-    render() {
-        return (
-            <>
-                <h3>child</h3>
-            </>
-        );
-    }
+    return (
+        <>
+            <h3>child</h3>
+        </>
+    );
 }
 
 class App extends Component {
@@ -207,7 +224,7 @@ class App extends Component {
             console.log('justice', this.intervalId);
         }, 2000)
 
-        console.log(this.intervalId);
+        console.log(this.intervalId, 'MOUNT');
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
