@@ -275,6 +275,8 @@ export const App = () => {
             <h2 onClick={upCounter}>React {counter} times</h2>
             {loadingStatus && <h2>loading...</h2>}
             {!!todo && <h3>{todo.title} - {todo.completed.toString()} - {todo.id}</h3>}
+            {/*may so, but render "-"*/}
+            {/*<h3>{todo?.title} {todo? '-' : ''} {todo?.completed.toString()} {todo? '-' : ''} {todo?.id}</h3>*/}
         </div>
     )
 }
