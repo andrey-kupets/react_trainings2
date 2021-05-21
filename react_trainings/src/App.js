@@ -249,25 +249,24 @@ const baseUrl = 'https://jsonplaceholder.typicode.com/todos';
 
 export const App = () => {
     const [todos, setTodos] = useState([]);
-    const [isLoading, setLoading] = useState(false);
+    const [loadingStatus, setLoading] = useState(false);
 
     const getData = async () => {
         setLoading(true);
         const res = await fetch(baseUrl);
         const data = await res.json();
-        // setInterval(() => {
         setTodos(data);
         setLoading(false);
-        // },1000);
+        console.log(todos);// void array cause of 'set...' is - ASYNC FUNC.
     };
 
     useEffect(() => {
         getData();
-    })
+    },[])
 
     return (
         <div>
-            {!todos.length && isLoading && <h2>loading...</h2>}
+            {!todos.length && loadingStatus && <h2>loading...</h2>}
             {!!todos.length && <h3>{todos[0].title} - {todos[0].completed.toString()}</h3>}
         </div>
     )
