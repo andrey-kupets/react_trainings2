@@ -174,7 +174,7 @@ import './App.css';
 
 //2. componentDidMount, DidUpdate, WillUnmount
 // useEffect
-
+//
 // class Child extends Component {
 //     componentDidMount() {
 //         console.log('child mount');
@@ -192,7 +192,7 @@ import './App.css';
 //         );
 //     }
 // }
-
+//
 // const Child =() => {
 //
 //     //REMEMBER return in useEffect === WillUnmount
@@ -208,7 +208,7 @@ import './App.css';
 //         </>
 //     );
 // }
-
+//
 // class App extends Component {
 //     state = {counter: 0};
 //     intervalId;
@@ -243,31 +243,38 @@ import './App.css';
 //     }
 // }
 
-
 // 3. Fetching, loading
-const baseUrl = 'https://jsonplaceholder.typicode.com/todos';
+const baseUrl = 'https://jsonplaceholder.typicode.com/todos/';
 
 export const App = () => {
-    const [todos, setTodos] = useState([]);
+    const [counter, setCounter] = useState(1);
+    // const [todos, setTodos] = useState([]);
+    const [todo, setTodo] = useState(null);
     const [loadingStatus, setLoading] = useState(false);
+
+    const upCounter = () => {
+        setCounter(counter + 1);
+    }
 
     const getData = async () => {
         setLoading(true);
-        const res = await fetch(baseUrl);
+        const res = await fetch(`${baseUrl}${counter}`);
         const data = await res.json();
-        setTodos(data);
+        setTodo(data);
         setLoading(false);
-        console.log(todos);// void array cause of 'set...' is - ASYNC FUNC.
+        // console.log(todos);// void array cause of 'set...' is - ASYNC FUNC.
     };
 
     useEffect(() => {
         getData();
-    },[])
+        return () => setTodo(null); // unmount prev todo
+    },[counter])
 
     return (
         <div>
-            {!todos.length && loadingStatus && <h2>loading...</h2>}
-            {!!todos.length && <h3>{todos[0].title} - {todos[0].completed.toString()}</h3>}
+            <h2 onClick={upCounter}>React {counter} times</h2>
+            {loadingStatus && <h2>loading...</h2>}
+            {!!todo && <h3>{todo.title} - {todo.completed.toString()} - {todo.id}</h3>}
         </div>
     )
 }
