@@ -193,56 +193,77 @@ import './App.css';
 //     }
 // }
 
+// const Child =() => {
+//
+//     //REMEMBER return in useEffect === WillUnmount
+//     useEffect(() => {
+//         console.log('child mount');
+//
+//         return () => console.log('no child render more');
+//     },[]);
+//
+//     return (
+//         <>
+//             <h3>child</h3>
+//         </>
+//     );
+// }
 
-const Child =() => {
+// class App extends Component {
+//     state = {counter: 0};
+//     intervalId;
+//
+//     inc = () => {
+//         // this.state.counter++;
+//         this.setState({counter: ++this.state.counter});
+//         console.log(this.state.counter)
+//     }
+//     componentDidMount() {
+//         this.intervalId = setInterval(() => {
+//             console.log('justice', this.intervalId);
+//         }, 2000)
+//
+//         console.log(this.intervalId, 'MOUNT');
+//     }
+//
+//     componentDidUpdate(prevProps, prevState, snapshot) {
+//         console.log('state is updated');
+//     }
+//
+//
+//
+//     render() {
+//         return (
+//             <>
+//                 <h2 onClick={this.inc}>react {this.state.counter} is - in justice</h2>
+//                 {this.state.counter < 3 && <Child/>}
+//
+//             </>
+//         );
+//     }
+// }
 
-    //REMEMBER return in useEffect === WillUnmount
+
+// 3. Fetching
+const baseUrl = 'https://jsonplaceholder.typicode.com/todos';
+
+export const App = () => {
+
+    const getData = async () => {
+        const res = await fetch(baseUrl);
+        const data = await res.json();
+        console.log(data);
+    };
+
     useEffect(() => {
-        console.log('child mount');
-
-        return () => console.log('no child render more');
-    },[]);
+        getData();
+    })
 
     return (
-        <>
-            <h3>child</h3>
-        </>
-    );
+        <div>
+            App
+        </div>
+    )
 }
-
-class App extends Component {
-    state = {counter: 0};
-    intervalId;
-
-    inc = () => {
-        // this.state.counter++;
-        this.setState({counter: ++this.state.counter});
-        console.log(this.state.counter)
-    }
-    componentDidMount() {
-        this.intervalId = setInterval(() => {
-            console.log('justice', this.intervalId);
-        }, 2000)
-
-        console.log(this.intervalId, 'MOUNT');
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('state is updated');
-    }
-
-
-
-    render() {
-        return (
-            <>
-                <h2 onClick={this.inc}>react {this.state.counter} is - in justice</h2>
-                {this.state.counter < 3 && <Child/>}
-
-            </>
-        );
-    }
-}
-
 export default App;
 
