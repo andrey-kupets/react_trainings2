@@ -356,7 +356,7 @@ const TodosList = ({ todos }) => {
     <>
       {todos.map((todo) => (
         <div key={todo.id}>
-          <h3>{todo.title} - {todo.completed?.toString()}</h3>
+          <h3>{todo.title} - {todo.completed.toString()}</h3>
         </div>
         ))}
     </>
@@ -378,13 +378,20 @@ const UsersList = ({ users }) => {
 const baseUrlBuilder = (source) => `https://jsonplaceholder.typicode.com/${source}`;
 
 export const App = () => {
+  const tabChangeHandler = (tabTitle) => {
+    if (tabTitle !== selectedTabTitle) {
+    setSelectedTabTitle(tabTitle);
+    setList([]);
+    }
+  };
+
   const tabs = [
-    { title: 'posts', clickHandler: () => setSelectedTabTitle('posts') },
-    { title: 'comments', clickHandler: () => setSelectedTabTitle('comments') },
-    { title: 'albums', clickHandler: () => setSelectedTabTitle('albums') },
-    { title: 'photos', clickHandler: () => setSelectedTabTitle('photos') },
-    { title: 'todos', clickHandler: () => setSelectedTabTitle('todos') },
-    { title: 'users', clickHandler: () => setSelectedTabTitle('users') },
+    { title: 'posts', clickHandler: () => tabChangeHandler('posts') },
+    { title: 'comments', clickHandler: () => tabChangeHandler('comments') },
+    { title: 'albums', clickHandler: () => tabChangeHandler('albums') },
+    { title: 'photos', clickHandler: () => tabChangeHandler('photos') },
+    { title: 'todos', clickHandler: () => tabChangeHandler('todos') },
+    { title: 'users', clickHandler: () => tabChangeHandler('users') },
   ];
 
   const [selectedTabTitle, setSelectedTabTitle] = useState(tabs[0].title);
