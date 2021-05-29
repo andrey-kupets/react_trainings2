@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, {Component, useEffect, useState} from "react";
 import logo from './logo.svg';
 import './App.css';
 
@@ -284,7 +284,7 @@ import './App.css';
 // 4. Tabs of JSONPlaceholder
 const Tabs = ({ tabs, selectedTab }) => {
   return (
-    <div style={{display: 'flex'}}>
+    <div style={{ display: 'flex' }}>
       {tabs.map((tab) => <button
         key={tab.title}
         style={{
@@ -298,10 +298,22 @@ const Tabs = ({ tabs, selectedTab }) => {
       </button>)}
     </div>
   )
+};
+
+const PostsList = ({ posts }) => {
+  return (
+    <>
+      {posts.map((post) => (
+        <div key={post.id}>
+          <h3>{post.title}</h3>
+          <>{post.body}</>
+        </div>
+        ))}
+    </>
+  )
 }
 
 const baseUrlBuilder = (source) => `https://jsonplaceholder.typicode.com/${source}`;
-
 
 export const App = () => {
   const tabs = [
@@ -314,11 +326,13 @@ export const App = () => {
   ];
 
   const [selectedTabTitle, setSelectedTabTitle] = useState(tabs[0].title);
+  const [list, setList] = useState([]);
 
   const fetchData = async () => {
     const response = await fetch(baseUrlBuilder(selectedTabTitle));
     const data = await response.json();
-    console.log(selectedTabTitle, data);
+    // console.log(selectedTabTitle, data);
+    setList(data);
   };
 
   useEffect(() => {
@@ -328,6 +342,7 @@ export const App = () => {
   return (
     <div>
       <Tabs tabs={tabs} selectedTab={selectedTabTitle}/>
+      <PostsList posts={list}/>
     </div>
   )
 }
