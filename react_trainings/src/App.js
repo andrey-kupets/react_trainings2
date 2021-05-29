@@ -282,7 +282,7 @@ import './App.css';
 // }
 
 // 4. Tabs of JSONPlaceholder
-const Tabs = ({ tabs, selectedTab }) => {
+const Tabs = ({ tabs, selectedTabTitle }) => {
   return (
     <div style={{ display: 'flex' }}>
       {tabs.map((tab) => <button
@@ -290,7 +290,7 @@ const Tabs = ({ tabs, selectedTab }) => {
         style={{
           flex: 1,
           height: '40px',
-          background: selectedTab === tab.title ? 'lightcoral' :'greenyellow'
+          background: selectedTabTitle === tab.title ? 'lightcoral' :'greenyellow'
         }}
         onClick={tab.clickHandler}
       >
@@ -311,7 +311,69 @@ const PostsList = ({ posts }) => {
         ))}
     </>
   )
-}
+};
+
+const CommentsList = ({ comments }) => {
+  return (
+    <>
+      {comments.map((comment) => (
+        <div key={comment.id}>
+          <h3>{comment.name}</h3>
+          <>{comment.body}</>
+        </div>
+        ))}
+    </>
+  )
+};
+
+const AlbumsList = ({ albums }) => {
+  return (
+    <>
+      {albums.map((album) => (
+        <div key={album.id}>
+          <h3>{album.title}</h3>
+        </div>
+        ))}
+    </>
+  )
+};
+
+const PhotosList = ({ photos }) => {
+  return (
+    <>
+      {photos.map((photo) => (
+        <div key={photo.id}>
+          <h3>{photo.title}</h3>
+          <img src={photo.thumbnailUrl} alt=""/>
+        </div>
+        ))}
+    </>
+  )
+};
+
+const TodosList = ({ todos }) => {
+  return (
+    <>
+      {todos.map((todo) => (
+        <div key={todo.id}>
+          <h3>{todo.title} - {todo.completed?.toString()}</h3>
+        </div>
+        ))}
+    </>
+  )
+};
+
+const UsersList = ({ users }) => {
+  return (
+    <>
+      {users.map((user) => (
+        <div key={user.id}>
+          <h3>{user.name} - {user.username} - {user.email}</h3>
+        </div>
+        ))}
+    </>
+  )
+};
 
 const baseUrlBuilder = (source) => `https://jsonplaceholder.typicode.com/${source}`;
 
@@ -341,8 +403,13 @@ export const App = () => {
 
   return (
     <div>
-      <Tabs tabs={tabs} selectedTab={selectedTabTitle}/>
-      <PostsList posts={list}/>
+      <Tabs tabs={tabs} selectedTabTitle={selectedTabTitle}/>
+      {selectedTabTitle === 'posts' && <PostsList posts={list}/>}
+      {selectedTabTitle === 'comments' && <CommentsList comments={list}/>}
+      {selectedTabTitle === 'albums' && <AlbumsList albums={list}/>}
+      {selectedTabTitle === 'photos' && <PhotosList photos={list}/>}
+      {selectedTabTitle === 'todos' && <TodosList todos={list}/>}
+      {selectedTabTitle === 'users' && <UsersList users={list}/>}
     </div>
   )
 }
