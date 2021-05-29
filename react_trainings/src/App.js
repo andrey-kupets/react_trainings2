@@ -284,29 +284,50 @@ import './App.css';
 // 4. Tabs of JSONPlaceholder
 const Tabs = ({ tabs, selectedTab }) => {
   return (
-    <div>
-      {tabs.map((tab) => <button style={{ background: selectedTab === tab.title ? 'lightcoral' :'greenyellow' }}
-                                 onClick={tab.clickHandler}>{tab.title}</button>)}
+    <div style={{display: 'flex'}}>
+      {tabs.map((tab) => <button
+        key={tab.title}
+        style={{
+          flex: 1,
+          height: '40px',
+          background: selectedTab === tab.title ? 'lightcoral' :'greenyellow'
+        }}
+        onClick={tab.clickHandler}
+      >
+        {tab.title}
+      </button>)}
     </div>
   )
 }
 
+const baseUrlBuilder = (source) => `https://jsonplaceholder.typicode.com/${source}`;
+
 
 export const App = () => {
   const tabs = [
-    { title: 'posts', clickHandler: () => setSelectedTab('posts') },
-    { title: 'comments', clickHandler: () => setSelectedTab('comments') },
-    { title: 'albums', clickHandler: () => setSelectedTab('albums') },
-    { title: 'photos', clickHandler: () => setSelectedTab('photos') },
-    { title: 'todos', clickHandler: () => setSelectedTab('todos') },
-    { title: 'users', clickHandler: () => setSelectedTab('users') },
+    { title: 'posts', clickHandler: () => setSelectedTabTitle('posts') },
+    { title: 'comments', clickHandler: () => setSelectedTabTitle('comments') },
+    { title: 'albums', clickHandler: () => setSelectedTabTitle('albums') },
+    { title: 'photos', clickHandler: () => setSelectedTabTitle('photos') },
+    { title: 'todos', clickHandler: () => setSelectedTabTitle('todos') },
+    { title: 'users', clickHandler: () => setSelectedTabTitle('users') },
   ];
 
-  const [selectedTab, setSelectedTab] = useState(tabs[0].title);
+  const [selectedTabTitle, setSelectedTabTitle] = useState(tabs[0].title);
+
+  const fetchData = async () => {
+    const response = await fetch(baseUrlBuilder(selectedTabTitle));
+    const data = await response.json();
+    console.log(selectedTabTitle, data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [selectedTabTitle])
 
   return (
     <div>
-      <Tabs tabs={tabs} selectedTab={selectedTab}/>
+      <Tabs tabs={tabs} selectedTab={selectedTabTitle}/>
     </div>
   )
 }
