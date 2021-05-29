@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from "react";
+import React, { Component, useEffect, useState } from "react";
 import logo from './logo.svg';
 import './App.css';
 
@@ -282,10 +282,11 @@ import './App.css';
 // }
 
 // 4. Tabs of JSONPlaceholder
-const Tabs = ({tabs, selectedTab}) => {
+const Tabs = ({ tabs, selectedTab }) => {
   return (
     <div>
-      {tabs.map((tab) => <button style={{background: selectedTab === tab.title ? 'lightcoral' : 'greenyellow'}} onClick={tab.clickHandler}>{tab.title}</button>)}
+      {tabs.map((tab) => <button style={{ background: selectedTab === tab.title ? 'lightcoral' :'greenyellow' }}
+                                 onClick={tab.clickHandler}>{tab.title}</button>)}
     </div>
   )
 }
@@ -293,13 +294,13 @@ const Tabs = ({tabs, selectedTab}) => {
 
 export const App = () => {
   const tabs = [
-    { title: 'posts', clickHandler: () => {}},
-    { title: 'comments', clickHandler: () => {}},
-    { title: 'albums', clickHandler: () => {}},
-    { title: 'photos', clickHandler: () => {}},
-    { title: 'todos', clickHandler: () => {}},
-    { title: 'users', clickHandler: () => {}},
-    ];
+    { title: 'posts', clickHandler: () => setSelectedTab('posts') },
+    { title: 'comments', clickHandler: () => setSelectedTab('comments') },
+    { title: 'albums', clickHandler: () => setSelectedTab('albums') },
+    { title: 'photos', clickHandler: () => setSelectedTab('photos') },
+    { title: 'todos', clickHandler: () => setSelectedTab('todos') },
+    { title: 'users', clickHandler: () => setSelectedTab('users') },
+  ];
 
   const [selectedTab, setSelectedTab] = useState(tabs[0].title);
 
