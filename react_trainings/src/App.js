@@ -244,41 +244,70 @@ import './App.css';
 // }
 
 // 3. Fetching, loading
-const baseUrl = 'https://jsonplaceholder.typicode.com/todos/';
+// const baseUrl = 'https://jsonplaceholder.typicode.com/todos/';
+//
+// export const App = () => {
+//     const [counter, setCounter] = useState(1);
+//     // const [todos, setTodos] = useState([]);
+//     const [todo, setTodo] = useState(null);
+//     const [loadingStatus, setLoading] = useState(false);
+//
+//     const upCounter = () => {
+//         setCounter(counter + 1);
+//     }
+//
+//     const getData = async () => {
+//         setLoading(true);
+//         const res = await fetch(`${baseUrl}${counter}`);
+//         const data = await res.json();
+//         setTodo(data);
+//         setLoading(false);
+//         // console.log(todos);// void array cause of 'set...' is - ASYNC FUNC.
+//     };
+//
+//     useEffect(() => {
+//         getData();
+//         return () => setTodo(null); // unmount prev todo
+//     },[counter])
+//
+//     return (
+//         <div>
+//             <h2 onClick={upCounter}>React {counter} times</h2>
+//             {loadingStatus && <h2>loading...</h2>}
+//             {!!todo && <h3>{todo.title} - {todo.completed.toString()} - {todo.id}</h3>}
+//             {/*may so, but render "-"*/}
+//             {/*<h3>{todo?.title} {todo? '-' : ''} {todo?.completed.toString()} {todo? '-' : ''} {todo?.id}</h3>*/}
+//         </div>
+//     )
+// }
+
+// 4. Tabs of JSONPlaceholder
+const Tabs = ({tabs, selectedTab}) => {
+  return (
+    <div>
+      {tabs.map((tab) => <button style={{background: selectedTab === tab.title ? 'lightcoral' : 'greenyellow'}} onClick={tab.clickHandler}>{tab.title}</button>)}
+    </div>
+  )
+}
+
 
 export const App = () => {
-    const [counter, setCounter] = useState(1);
-    // const [todos, setTodos] = useState([]);
-    const [todo, setTodo] = useState(null);
-    const [loadingStatus, setLoading] = useState(false);
+  const tabs = [
+    { title: 'posts', clickHandler: () => {}},
+    { title: 'comments', clickHandler: () => {}},
+    { title: 'albums', clickHandler: () => {}},
+    { title: 'photos', clickHandler: () => {}},
+    { title: 'todos', clickHandler: () => {}},
+    { title: 'users', clickHandler: () => {}},
+    ];
 
-    const upCounter = () => {
-        setCounter(counter + 1);
-    }
+  const [selectedTab, setSelectedTab] = useState(tabs[0].title);
 
-    const getData = async () => {
-        setLoading(true);
-        const res = await fetch(`${baseUrl}${counter}`);
-        const data = await res.json();
-        setTodo(data);
-        setLoading(false);
-        // console.log(todos);// void array cause of 'set...' is - ASYNC FUNC.
-    };
-
-    useEffect(() => {
-        getData();
-        return () => setTodo(null); // unmount prev todo
-    },[counter])
-
-    return (
-        <div>
-            <h2 onClick={upCounter}>React {counter} times</h2>
-            {loadingStatus && <h2>loading...</h2>}
-            {!!todo && <h3>{todo.title} - {todo.completed.toString()} - {todo.id}</h3>}
-            {/*may so, but render "-"*/}
-            {/*<h3>{todo?.title} {todo? '-' : ''} {todo?.completed.toString()} {todo? '-' : ''} {todo?.id}</h3>*/}
-        </div>
-    )
+  return (
+    <div>
+      <Tabs tabs={tabs} selectedTab={selectedTab}/>
+    </div>
+  )
 }
 export default App;
 
