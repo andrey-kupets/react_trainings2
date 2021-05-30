@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from "react";
+import React, {Component, useEffect, useRef, useState} from "react";
 import logo from './logo.svg';
 import './App.css';
 
@@ -478,11 +478,20 @@ import './App.css';
 // 5. Inputs (controlled, uncontrolled)
 
 const App = () => {
+  const _firstName = useRef();
+  const _lastName = useRef();
+  const _email = useRef();
+  const _age = useRef();
+  const _password = useRef();
+  const _form = useRef();
+
   const onSubmit = e => {
     e.preventDefault();
     console.log(e);
+  // _firstName.current.focus();
+  // _firstName.current.style.background = 'lightblue';
 
-    const {
+    // const {
     //  1.1
     //   target: [
     //   { value: firstName },
@@ -492,39 +501,55 @@ const App = () => {
     //   { value: password }
     // ],
     //  1.2
-      target: {
-        elements: {
-          firstName,
-          lastName,
-          email,
-          age,
-          password,
-        }
-      }
-    } = e;
+    //   target: {
+    //     elements: {
+    //       firstName,
+    //       lastName,
+    //       email,
+    //       age,
+    //       password,
+    //     }
+    //   }
+    // } = e;
 
-    console.log({ firstName, lastName, email, age, password });
+    // console.log({ firstName, lastName, email, age, password });
+    // alert(JSON.stringify({
+    //   firstName: firstName.value,
+    //   lastName: lastName.value,
+    //   email: email.value,
+    //   age: age.value,
+    //   password: password.value
+    // }, null, 2));
+
     alert(JSON.stringify({
-      firstName: firstName.value,
-      lastName: lastName.value,
-      email: email.value,
-      age: age.value,
-      password: password.value
+      firstName: _firstName.current.value,
+      lastName: _lastName.current.value,
+      email: _email.current.value,
+      age: _age.current.value,
+      password: _password.current.value
     }, null, 2));
+
+  // _form.current.reset(); // ??
+  // _firstName.current.value = '';
+  // _lastName.current.value = '';
+  // _email.current.value = '';
+  // _age.current.value = '';
+  // _password.current.value = '';
   };
+
 
   return (
     <div className="App">
-      <form onSubmit={onSubmit}>
-        <input type="text" name="firstName" placeholder="input yr name" defaultValue="andrii"/>
+      <form ref={_form} onSubmit={onSubmit}>
+        <input ref={_firstName} type="text" name="firstName" placeholder="input yr name" defaultValue="andrii"/>
         <br/>
-        <input type="text" name="lastName" placeholder="input yr surname" defaultValue="pinskyi"/>
+        <input ref={_lastName} type="text" name="lastName" placeholder="input yr surname" defaultValue="pinskyi"/>
         <br/>
-        <input type="email" name="email" placeholder="input email" defaultValue="andre@gmail.com"/>
+        <input ref={_email} type="email" name="email" placeholder="input email" defaultValue="andre@gmail.com"/>
         <br/>
-        <input type="number" name="age" placeholder="input age" defaultValue="38"/>
+        <input ref={_age} type="number" name="age" placeholder="input age" defaultValue="38"/>
         <br/>
-        <input type="password" name="password" placeholder="input password" defaultValue="pass777"/>
+        <input ref={_password} type="password" name="password" placeholder="input password" defaultValue="pass777"/>
         <br/>
         <br/>
         <button type="submit">submit</button>
