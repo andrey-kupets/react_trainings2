@@ -282,19 +282,19 @@ import './App.css';
 // }
 
 // 4. Tabs of JSONPlaceholder
-const Tabs = ({ tabs, selectedTabTitle }) => {
+const Tabs = ({ tabs, selectedTabTitle, onTabClick }) => {
   return (
     <div style={{ display: 'flex' }}>
       {tabs.map((tab) => <button
-        key={tab.title}
+        key={tab}
         style={{
           flex: 1,
           height: '40px',
-          background: selectedTabTitle === tab.title ? 'lightcoral' :'greenyellow'
+          background: selectedTabTitle === tab ? 'lightcoral' :'greenyellow'
         }}
-        onClick={tab.clickHandler}
+        onClick={() => onTabClick(tab)}
       >
-        {tab.title}
+        {tab}
       </button>)}
     </div>
   )
@@ -379,6 +379,41 @@ const UsersList = ({ list }) => {
 
 const baseUrlBuilder = (source) => `https://jsonplaceholder.typicode.com/${source}`;
 
+
+const POSTS = 'posts';
+const COMMENTS = 'comments';
+const ALBUMS = 'albums';
+const PHOTOS = 'photos';
+const TODOS = 'todos';
+const USERS = 'users';
+
+const Components = {
+  [POSTS]: PostsList,
+  [COMMENTS]: CommentsList,
+  [ALBUMS]: AlbumsList,
+  [PHOTOS]: PhotosList,
+  [TODOS]: TodosList,
+  [USERS]: UsersList,
+};
+
+// const tabs = [
+//   { title: POSTS, clickHandler: () => setSelectedTabTitle(POSTS) },
+//   { title: COMMENTS, clickHandler: () => setSelectedTabTitle(COMMENTS) },
+//   { title: ALBUMS, clickHandler: () => setSelectedTabTitle(ALBUMS) },
+//   { title: PHOTOS, clickHandler: () => setSelectedTabTitle(PHOTOS) },
+//   { title: TODOS, clickHandler: () => setSelectedTabTitle(TODOS) },
+//   { title: USERS, clickHandler: () => setSelectedTabTitle(USERS) },
+// ];
+
+const tabs = [
+  POSTS,
+  COMMENTS,
+  ALBUMS,
+  PHOTOS,
+  TODOS,
+  USERS,
+];
+
 export const App = () => {
   // helper function instead of Loading
   // const tabChangeHandler = (tabTitle) => {
@@ -388,32 +423,7 @@ export const App = () => {
   //   }
   // };
 
-  const POSTS = 'posts';
-  const COMMENTS = 'comments';
-  const ALBUMS = 'albums';
-  const PHOTOS = 'photos';
-  const TODOS = 'todos';
-  const USERS = 'users';
-
-  const Components = {
-    [POSTS]: PostsList,
-    [COMMENTS]: CommentsList,
-    [ALBUMS]: AlbumsList,
-    [PHOTOS]: PhotosList,
-    [TODOS]: TodosList,
-    [USERS]: UsersList,
-  };
-
-  const tabs = [
-    { title: POSTS, clickHandler: () => setSelectedTabTitle(POSTS) },
-    { title: COMMENTS, clickHandler: () => setSelectedTabTitle(COMMENTS) },
-    { title: ALBUMS, clickHandler: () => setSelectedTabTitle(ALBUMS) },
-    { title: PHOTOS, clickHandler: () => setSelectedTabTitle(PHOTOS) },
-    { title: TODOS, clickHandler: () => setSelectedTabTitle(TODOS) },
-    { title: USERS, clickHandler: () => setSelectedTabTitle(USERS) },
-  ];
-
-  const [selectedTabTitle, setSelectedTabTitle] = useState(tabs[0].title);
+  const [selectedTabTitle, setSelectedTabTitle] = useState(tabs[0]);
   // const [list, setList] = useState([]);
   const [data, setData] = useState({
     [POSTS]: [],
@@ -444,7 +454,11 @@ export const App = () => {
 
   return (
     <div>
-      <Tabs tabs={tabs} selectedTabTitle={selectedTabTitle}/>
+      <Tabs
+        tabs={tabs}
+        selectedTabTitle={selectedTabTitle}
+        onTabClick={tab => setSelectedTabTitle(tab)}
+      />
       {loading && !data[selectedTabTitle].length ? <h2>LOADING...</h2> : (
         <ComponentToRender list={data[selectedTabTitle]}/>
         // <>
