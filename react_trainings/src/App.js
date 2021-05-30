@@ -569,7 +569,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <input value={firstName} type="text" name="firstName" placeholder="input yr name" defaultValue="andrii"/>
+      <input onChange={({target: { value }}) => setFirstName(value)} type="text" name="firstName" placeholder="input yr name" defaultValue="andrii"/>
       <br/>
       <input type="text" name="lastName" placeholder="input yr surname" defaultValue="pinskyi"/>
       <br/>
