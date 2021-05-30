@@ -300,10 +300,10 @@ const Tabs = ({ tabs, selectedTabTitle }) => {
   )
 };
 
-const PostsList = ({ posts }) => {
+const PostsList = ({ list }) => {
   return (
     <>
-      {posts.map((post) => (
+      {list.map((post) => (
         <div key={post.id}>
           <h3>{post.title}</h3>
           <>{post.body}</>
@@ -313,10 +313,10 @@ const PostsList = ({ posts }) => {
   )
 };
 
-const CommentsList = ({ comments }) => {
+const CommentsList = ({ list }) => {
   return (
     <>
-      {comments.map((comment) => (
+      {list.map((comment) => (
         <div key={comment.id}>
           <h3>{comment.name}</h3>
           <>{comment.body}</>
@@ -326,10 +326,10 @@ const CommentsList = ({ comments }) => {
   )
 };
 
-const AlbumsList = ({ albums }) => {
+const AlbumsList = ({ list }) => {
   return (
     <>
-      {albums.map((album) => (
+      {list.map((album) => (
         <div key={album.id}>
           <h3>{album.title}</h3>
         </div>
@@ -338,10 +338,10 @@ const AlbumsList = ({ albums }) => {
   )
 };
 
-const PhotosList = ({ photos }) => {
+const PhotosList = ({ list }) => {
   return (
     <>
-      {photos.map((photo) => (
+      {list.map((photo) => (
         <div key={photo.id}>
           <h3>{photo.title}</h3>
           <img src={photo.thumbnailUrl} alt=""/>
@@ -351,22 +351,24 @@ const PhotosList = ({ photos }) => {
   )
 };
 
-const TodosList = ({ todos }) => {
+const TodosList = ({ list }) => {
   return (
     <>
-      {todos.map((todo) => (
+      {list.map((todo) => (
         <div key={todo.id}>
           <h3>{todo.title} - {todo.completed.toString()}</h3>
+          {/*instead of helper function*/}
+          {/*<h3>{todo.title} - {todo.completed?.toString()}</h3>*/}
         </div>
         ))}
     </>
   )
 };
 
-const UsersList = ({ users }) => {
+const UsersList = ({ list }) => {
   return (
     <>
-      {users.map((user) => (
+      {list.map((user) => (
         <div key={user.id}>
           <h3>{user.name} - {user.username} - {user.email}</h3>
         </div>
@@ -378,45 +380,82 @@ const UsersList = ({ users }) => {
 const baseUrlBuilder = (source) => `https://jsonplaceholder.typicode.com/${source}`;
 
 export const App = () => {
+  // helper function instead of Loading
   const tabChangeHandler = (tabTitle) => {
     if (tabTitle !== selectedTabTitle) {
-    setSelectedTabTitle(tabTitle);
-    setList([]);
+      setSelectedTabTitle(tabTitle);
+      setList([]);
     }
   };
 
+  const POSTS = 'posts';
+  const COMMENTS = 'comments';
+  const ALBUMS = 'albums';
+  const PHOTOS = 'photos';
+  const TODOS = 'todos';
+  const USERS = 'users';
+
+  const Components = {
+    [POSTS]: PostsList,
+    [COMMENTS]: CommentsList,
+    [ALBUMS]: AlbumsList,
+    [PHOTOS]: PhotosList,
+    [TODOS]: TodosList,
+    [USERS]: UsersList,
+  };
+
   const tabs = [
-    { title: 'posts', clickHandler: () => tabChangeHandler('posts') },
-    { title: 'comments', clickHandler: () => tabChangeHandler('comments') },
-    { title: 'albums', clickHandler: () => tabChangeHandler('albums') },
-    { title: 'photos', clickHandler: () => tabChangeHandler('photos') },
-    { title: 'todos', clickHandler: () => tabChangeHandler('todos') },
-    { title: 'users', clickHandler: () => tabChangeHandler('users') },
+    { title: POSTS, clickHandler: () => tabChangeHandler(POSTS) },
+    { title: COMMENTS, clickHandler: () => tabChangeHandler(COMMENTS) },
+    { title: ALBUMS, clickHandler: () => tabChangeHandler(ALBUMS) },
+    { title: PHOTOS, clickHandler: () => tabChangeHandler(PHOTOS) },
+    { title: TODOS, clickHandler: () => tabChangeHandler(TODOS) },
+    { title: USERS, clickHandler: () => tabChangeHandler(USERS) },
   ];
 
   const [selectedTabTitle, setSelectedTabTitle] = useState(tabs[0].title);
   const [list, setList] = useState([]);
+  const [data, setData] = useState({
+    [POSTS]: [],
+    [COMMENTS]: [],
+    [ALBUMS]: [],
+    [PHOTOS]: [],
+    [TODOS]: [],
+    [USERS]: [],
+  });
+  const  [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
+    setLoading(true);
     const response = await fetch(baseUrlBuilder(selectedTabTitle));
     const data = await response.json();
-    // console.log(selectedTabTitle, data);
+    console.log(selectedTabTitle, data);
+
+    setData({ ...data, [selectedTabTitle]: data });
     setList(data);
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchData();
   }, [selectedTabTitle])
 
+  const ComponentToRender = Components[selectedTabTitle];
+
   return (
     <div>
       <Tabs tabs={tabs} selectedTabTitle={selectedTabTitle}/>
-      {selectedTabTitle === 'posts' && <PostsList posts={list}/>}
-      {selectedTabTitle === 'comments' && <CommentsList comments={list}/>}
-      {selectedTabTitle === 'albums' && <AlbumsList albums={list}/>}
-      {selectedTabTitle === 'photos' && <PhotosList photos={list}/>}
-      {selectedTabTitle === 'todos' && <TodosList todos={list}/>}
-      {selectedTabTitle === 'users' && <UsersList users={list}/>}
+      {loading ? <h2>LOADING...</h2> : (
+        <ComponentToRender list={list}/>
+        // <>
+        //   {selectedTabTitle === POSTS && <PostsList posts={list}/>}
+        //   {selectedTabTitle === COMMENTS && <CommentsList comments={list}/>}
+        //   {selectedTabTitle === ALBUMS && <AlbumsList albums={list}/>}
+        //   {selectedTabTitle === PHOTOS && <PhotosList photos={list}/>}
+        //   {selectedTabTitle === TODOS && <TodosList todos={list}/>}
+        //   {selectedTabTitle === USERS && <UsersList users={list}/>}
+        // </>
+      )}
     </div>
   )
 }
