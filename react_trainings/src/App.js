@@ -484,23 +484,32 @@ const App = () => {
 
   //  1
 
-    const {target: [{ value: firstname }, { value: lastname }, { value: email }, { value: age }, { value: password }]} = e;
-    console.log(firstname, lastname, email, age);
-    console.log({ firstname, lastname, email, age });
+    const {target: [
+      { value: firstname },
+      { value: lastname },
+      { value: email },
+      { value: age },
+      { value: password }
+    ]} = e;
+
+    console.log({ firstname, lastname, email, age, password });
+    alert(JSON.stringify({
+      firstname, lastname, email, age, password
+    }, null, 2));
   };
 
   return (
     <div className="App">
       <form onSubmit={onSubmit}>
-        <input type="text" placeholder="input yr name" defaultValue="andrii"/>
+        <input type="text" name="firstName" placeholder="input yr name" defaultValue="andrii"/>
         <br/>
-        <input type="text" placeholder="input yr surname"/>
+        <input type="text" name="lastName" placeholder="input yr surname"/>
         <br/>
-        <input type="email" placeholder="input email"/>
+        <input type="email" name="email" placeholder="input email"/>
         <br/>
-        <input type="number" placeholder="input age"/>
+        <input type="number" name="age" placeholder="input age"/>
         <br/>
-        <input type="password" placeholder="input password"/>
+        <input type="password" name="password" placeholder="input password"/>
         <br/>
         <br/>
         <button type="submit">submit</button>
