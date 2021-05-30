@@ -381,12 +381,12 @@ const baseUrlBuilder = (source) => `https://jsonplaceholder.typicode.com/${sourc
 
 export const App = () => {
   // helper function instead of Loading
-  const tabChangeHandler = (tabTitle) => {
-    if (tabTitle !== selectedTabTitle) {
-      setSelectedTabTitle(tabTitle);
-      setList([]);
-    }
-  };
+  // const tabChangeHandler = (tabTitle) => {
+  //   if (tabTitle !== selectedTabTitle) {
+  //     setSelectedTabTitle(tabTitle);
+  //     // setList([]);
+  //   }
+  // };
 
   const POSTS = 'posts';
   const COMMENTS = 'comments';
@@ -405,16 +405,16 @@ export const App = () => {
   };
 
   const tabs = [
-    { title: POSTS, clickHandler: () => tabChangeHandler(POSTS) },
-    { title: COMMENTS, clickHandler: () => tabChangeHandler(COMMENTS) },
-    { title: ALBUMS, clickHandler: () => tabChangeHandler(ALBUMS) },
-    { title: PHOTOS, clickHandler: () => tabChangeHandler(PHOTOS) },
-    { title: TODOS, clickHandler: () => tabChangeHandler(TODOS) },
-    { title: USERS, clickHandler: () => tabChangeHandler(USERS) },
+    { title: POSTS, clickHandler: () => setSelectedTabTitle(POSTS) },
+    { title: COMMENTS, clickHandler: () => setSelectedTabTitle(COMMENTS) },
+    { title: ALBUMS, clickHandler: () => setSelectedTabTitle(ALBUMS) },
+    { title: PHOTOS, clickHandler: () => setSelectedTabTitle(PHOTOS) },
+    { title: TODOS, clickHandler: () => setSelectedTabTitle(TODOS) },
+    { title: USERS, clickHandler: () => setSelectedTabTitle(USERS) },
   ];
 
   const [selectedTabTitle, setSelectedTabTitle] = useState(tabs[0].title);
-  const [list, setList] = useState([]);
+  // const [list, setList] = useState([]);
   const [data, setData] = useState({
     [POSTS]: [],
     [COMMENTS]: [],
@@ -428,11 +428,11 @@ export const App = () => {
   const fetchData = async () => {
     setLoading(true);
     const response = await fetch(baseUrlBuilder(selectedTabTitle));
-    const data = await response.json();
-    console.log(selectedTabTitle, data);
+    const json = await response.json();
+    console.log(selectedTabTitle, json);
 
-    setData({ ...data, [selectedTabTitle]: data });
-    setList(data);
+    setData({ ...data, [selectedTabTitle]: json });
+    // setList(data);
     setLoading(false);
   };
 
@@ -445,8 +445,8 @@ export const App = () => {
   return (
     <div>
       <Tabs tabs={tabs} selectedTabTitle={selectedTabTitle}/>
-      {loading ? <h2>LOADING...</h2> : (
-        <ComponentToRender list={list}/>
+      {loading && !data[selectedTabTitle].length ? <h2>LOADING...</h2> : (
+        <ComponentToRender list={data[selectedTabTitle]}/>
         // <>
         //   {selectedTabTitle === POSTS && <PostsList posts={list}/>}
         //   {selectedTabTitle === COMMENTS && <CommentsList comments={list}/>}
