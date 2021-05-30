@@ -479,13 +479,20 @@ import './App.css';
 
 const App = () => {
   const onSubmit = e => {
-    console.log(e)
+    e.preventDefault();
+    console.log(e);
+
+  //  1
+
+    const {target: [{ value: firstname }, { value: lastname }, { value: email }, { value: age }, { value: password }]} = e;
+    console.log(firstname, lastname, email, age);
+    console.log({ firstname, lastname, email, age });
   };
 
   return (
     <div className="App">
       <form onSubmit={onSubmit}>
-        <input type="text" placeholder="input yr name" defaultValue="andrey"/>
+        <input type="text" placeholder="input yr name" defaultValue="andrii"/>
         <br/>
         <input type="text" placeholder="input yr surname"/>
         <br/>
