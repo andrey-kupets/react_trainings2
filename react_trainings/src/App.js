@@ -482,19 +482,34 @@ const App = () => {
     e.preventDefault();
     console.log(e);
 
-  //  1
+    const {
+    //  1.1
+    //   target: [
+    //   { value: firstName },
+    //   { value: lastName },
+    //   { value: email },
+    //   { value: age },
+    //   { value: password }
+    // ],
+    //  1.2
+      target: {
+        elements: {
+          firstName,
+          lastName,
+          email,
+          age,
+          password,
+        }
+      }
+    } = e;
 
-    const {target: [
-      { value: firstname },
-      { value: lastname },
-      { value: email },
-      { value: age },
-      { value: password }
-    ]} = e;
-
-    console.log({ firstname, lastname, email, age, password });
+    console.log({ firstName, lastName, email, age, password });
     alert(JSON.stringify({
-      firstname, lastname, email, age, password
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      age: age.value,
+      password: password.value
     }, null, 2));
   };
 
@@ -503,13 +518,13 @@ const App = () => {
       <form onSubmit={onSubmit}>
         <input type="text" name="firstName" placeholder="input yr name" defaultValue="andrii"/>
         <br/>
-        <input type="text" name="lastName" placeholder="input yr surname"/>
+        <input type="text" name="lastName" placeholder="input yr surname" defaultValue="pinskyi"/>
         <br/>
-        <input type="email" name="email" placeholder="input email"/>
+        <input type="email" name="email" placeholder="input email" defaultValue="andre@gmail.com"/>
         <br/>
-        <input type="number" name="age" placeholder="input age"/>
+        <input type="number" name="age" placeholder="input age" defaultValue="38"/>
         <br/>
-        <input type="password" name="password" placeholder="input password"/>
+        <input type="password" name="password" placeholder="input password" defaultValue="pass777"/>
         <br/>
         <br/>
         <button type="submit">submit</button>
