@@ -282,196 +282,225 @@ import './App.css';
 // }
 
 // 4. Tabs of JSONPlaceholder
-const Tabs = ({ tabs, selectedTabTitle, onTabClick }) => {
-  return (
-    <div style={{ display: 'flex' }}>
-      {tabs.map((tab) => <button
-        key={tab}
-        style={{
-          flex: 1,
-          height: '40px',
-          background: selectedTabTitle === tab ? 'lightcoral' :'greenyellow'
-        }}
-        onClick={() => onTabClick(tab)}
-      >
-        {tab}
-      </button>)}
-    </div>
-  )
-};
-
-const PostsList = ({ list }) => {
-  return (
-    <>
-      {list.map((post) => (
-        <div key={post.id}>
-          <h3>{post.title}</h3>
-          <>{post.body}</>
-        </div>
-        ))}
-    </>
-  )
-};
-
-const CommentsList = ({ list }) => {
-  return (
-    <>
-      {list.map((comment) => (
-        <div key={comment.id}>
-          <h3>{comment.name}</h3>
-          <>{comment.body}</>
-        </div>
-        ))}
-    </>
-  )
-};
-
-const AlbumsList = ({ list }) => {
-  return (
-    <>
-      {list.map((album) => (
-        <div key={album.id}>
-          <h3>{album.title}</h3>
-        </div>
-        ))}
-    </>
-  )
-};
-
-const PhotosList = ({ list }) => {
-  return (
-    <>
-      {list.map((photo) => (
-        <div key={photo.id}>
-          <h3>{photo.title}</h3>
-          <img src={photo.thumbnailUrl} alt=""/>
-        </div>
-        ))}
-    </>
-  )
-};
-
-const TodosList = ({ list }) => {
-  return (
-    <>
-      {list.map((todo) => (
-        <div key={todo.id}>
-          <h3>{todo.title} - {todo.completed.toString()}</h3>
-          {/*instead of helper function*/}
-          {/*<h3>{todo.title} - {todo.completed?.toString()}</h3>*/}
-        </div>
-        ))}
-    </>
-  )
-};
-
-const UsersList = ({ list }) => {
-  return (
-    <>
-      {list.map((user) => (
-        <div key={user.id}>
-          <h3>{user.name} - {user.username} - {user.email}</h3>
-        </div>
-        ))}
-    </>
-  )
-};
-
-const baseUrlBuilder = (source) => `https://jsonplaceholder.typicode.com/${source}`;
-
-
-const POSTS = 'posts';
-const COMMENTS = 'comments';
-const ALBUMS = 'albums';
-const PHOTOS = 'photos';
-const TODOS = 'todos';
-const USERS = 'users';
-
-const Components = {
-  [POSTS]: PostsList,
-  [COMMENTS]: CommentsList,
-  [ALBUMS]: AlbumsList,
-  [PHOTOS]: PhotosList,
-  [TODOS]: TodosList,
-  [USERS]: UsersList,
-};
-
+// const Tabs = ({ tabs, selectedTabTitle, onTabClick }) => {
+//   return (
+//     <div style={{ display: 'flex' }}>
+//       {tabs.map((tab) => <button
+//         key={tab}
+//         style={{
+//           flex: 1,
+//           height: '40px',
+//           background: selectedTabTitle === tab ? 'lightcoral' :'greenyellow'
+//         }}
+//         onClick={() => onTabClick(tab)}
+//       >
+//         {tab}
+//       </button>)}
+//     </div>
+//   )
+// };
+//
+// const PostsList = ({ list }) => {
+//   return (
+//     <>
+//       {list.map((post) => (
+//         <div key={post.id}>
+//           <h3>{post.title}</h3>
+//           <>{post.body}</>
+//         </div>
+//         ))}
+//     </>
+//   )
+// };
+//
+// const CommentsList = ({ list }) => {
+//   return (
+//     <>
+//       {list.map((comment) => (
+//         <div key={comment.id}>
+//           <h3>{comment.name}</h3>
+//           <>{comment.body}</>
+//         </div>
+//         ))}
+//     </>
+//   )
+// };
+//
+// const AlbumsList = ({ list }) => {
+//   return (
+//     <>
+//       {list.map((album) => (
+//         <div key={album.id}>
+//           <h3>{album.title}</h3>
+//         </div>
+//         ))}
+//     </>
+//   )
+// };
+//
+// const PhotosList = ({ list }) => {
+//   return (
+//     <>
+//       {list.map((photo) => (
+//         <div key={photo.id}>
+//           <h3>{photo.title}</h3>
+//           <img src={photo.thumbnailUrl} alt=""/>
+//         </div>
+//         ))}
+//     </>
+//   )
+// };
+//
+// const TodosList = ({ list }) => {
+//   return (
+//     <>
+//       {list.map((todo) => (
+//         <div key={todo.id}>
+//           <h3>{todo.title} - {todo.completed.toString()}</h3>
+//           {/*instead of helper function*/}
+//           {/*<h3>{todo.title} - {todo.completed?.toString()}</h3>*/}
+//         </div>
+//         ))}
+//     </>
+//   )
+// };
+//
+// const UsersList = ({ list }) => {
+//   return (
+//     <>
+//       {list.map((user) => (
+//         <div key={user.id}>
+//           <h3>{user.name} - {user.username} - {user.email}</h3>
+//         </div>
+//         ))}
+//     </>
+//   )
+// };
+//
+// const baseUrlBuilder = (source) => `https://jsonplaceholder.typicode.com/${source}`;
+//
+//
+// const POSTS = 'posts';
+// const COMMENTS = 'comments';
+// const ALBUMS = 'albums';
+// const PHOTOS = 'photos';
+// const TODOS = 'todos';
+// const USERS = 'users';
+//
+// const Components = {
+//   [POSTS]: PostsList,
+//   [COMMENTS]: CommentsList,
+//   [ALBUMS]: AlbumsList,
+//   [PHOTOS]: PhotosList,
+//   [TODOS]: TodosList,
+//   [USERS]: UsersList,
+// };
+//
+// // const tabs = [
+// //   { title: POSTS, clickHandler: () => setSelectedTabTitle(POSTS) },
+// //   { title: COMMENTS, clickHandler: () => setSelectedTabTitle(COMMENTS) },
+// //   { title: ALBUMS, clickHandler: () => setSelectedTabTitle(ALBUMS) },
+// //   { title: PHOTOS, clickHandler: () => setSelectedTabTitle(PHOTOS) },
+// //   { title: TODOS, clickHandler: () => setSelectedTabTitle(TODOS) },
+// //   { title: USERS, clickHandler: () => setSelectedTabTitle(USERS) },
+// // ];
+//
 // const tabs = [
-//   { title: POSTS, clickHandler: () => setSelectedTabTitle(POSTS) },
-//   { title: COMMENTS, clickHandler: () => setSelectedTabTitle(COMMENTS) },
-//   { title: ALBUMS, clickHandler: () => setSelectedTabTitle(ALBUMS) },
-//   { title: PHOTOS, clickHandler: () => setSelectedTabTitle(PHOTOS) },
-//   { title: TODOS, clickHandler: () => setSelectedTabTitle(TODOS) },
-//   { title: USERS, clickHandler: () => setSelectedTabTitle(USERS) },
+//   POSTS,
+//   COMMENTS,
+//   ALBUMS,
+//   PHOTOS,
+//   TODOS,
+//   USERS,
 // ];
+//
+// export const App = () => {
+//   // helper function instead of Loading
+//   // const tabChangeHandler = (tabTitle) => {
+//   //   if (tabTitle !== selectedTabTitle) {
+//   //     setSelectedTabTitle(tabTitle);
+//   //     // setList([]);
+//   //   }
+//   // };
+//
+//   const [selectedTabTitle, setSelectedTabTitle] = useState(tabs[0]);
+//   // const [list, setList] = useState([]);
+//   const [data, setData] = useState({
+//     [POSTS]: [],
+//     [COMMENTS]: [],
+//     [ALBUMS]: [],
+//     [PHOTOS]: [],
+//     [TODOS]: [],
+//     [USERS]: [],
+//   });
+//   const  [loading, setLoading] = useState(false);
+//
+//   const fetchData = async () => {
+//     setLoading(true);
+//     const response = await fetch(baseUrlBuilder(selectedTabTitle));
+//     const json = await response.json();
+//     console.log(selectedTabTitle, json);
+//
+//     setData({ ...data, [selectedTabTitle]: json });
+//     // setList(data);
+//     setLoading(false);
+//   };
+//
+//   useEffect(() => {
+//     fetchData();
+//   }, [selectedTabTitle])
+//
+//   const ComponentToRender = Components[selectedTabTitle];
+//
+//   return (
+//     <div>
+//       <Tabs
+//         tabs={tabs}
+//         selectedTabTitle={selectedTabTitle}
+//         onTabClick={tab => setSelectedTabTitle(tab)}
+//       />
+//       {loading && !data[selectedTabTitle].length ? <h2>LOADING...</h2> : (
+//         <ComponentToRender list={data[selectedTabTitle]}/>
+//         // <>
+//         //   {selectedTabTitle === POSTS && <PostsList posts={list}/>}
+//         //   {selectedTabTitle === COMMENTS && <CommentsList comments={list}/>}
+//         //   {selectedTabTitle === ALBUMS && <AlbumsList albums={list}/>}
+//         //   {selectedTabTitle === PHOTOS && <PhotosList photos={list}/>}
+//         //   {selectedTabTitle === TODOS && <TodosList todos={list}/>}
+//         //   {selectedTabTitle === USERS && <UsersList users={list}/>}
+//         // </>
+//       )}
+//     </div>
+//   )
+// }
+// export default App;
 
-const tabs = [
-  POSTS,
-  COMMENTS,
-  ALBUMS,
-  PHOTOS,
-  TODOS,
-  USERS,
-];
+// 5. Inputs (controlled, uncontrolled)
 
-export const App = () => {
-  // helper function instead of Loading
-  // const tabChangeHandler = (tabTitle) => {
-  //   if (tabTitle !== selectedTabTitle) {
-  //     setSelectedTabTitle(tabTitle);
-  //     // setList([]);
-  //   }
-  // };
-
-  const [selectedTabTitle, setSelectedTabTitle] = useState(tabs[0]);
-  // const [list, setList] = useState([]);
-  const [data, setData] = useState({
-    [POSTS]: [],
-    [COMMENTS]: [],
-    [ALBUMS]: [],
-    [PHOTOS]: [],
-    [TODOS]: [],
-    [USERS]: [],
-  });
-  const  [loading, setLoading] = useState(false);
-
-  const fetchData = async () => {
-    setLoading(true);
-    const response = await fetch(baseUrlBuilder(selectedTabTitle));
-    const json = await response.json();
-    console.log(selectedTabTitle, json);
-
-    setData({ ...data, [selectedTabTitle]: json });
-    // setList(data);
-    setLoading(false);
+const App = () => {
+  const onSubmit = e => {
+    console.log(e)
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [selectedTabTitle])
-
-  const ComponentToRender = Components[selectedTabTitle];
-
   return (
-    <div>
-      <Tabs
-        tabs={tabs}
-        selectedTabTitle={selectedTabTitle}
-        onTabClick={tab => setSelectedTabTitle(tab)}
-      />
-      {loading && !data[selectedTabTitle].length ? <h2>LOADING...</h2> : (
-        <ComponentToRender list={data[selectedTabTitle]}/>
-        // <>
-        //   {selectedTabTitle === POSTS && <PostsList posts={list}/>}
-        //   {selectedTabTitle === COMMENTS && <CommentsList comments={list}/>}
-        //   {selectedTabTitle === ALBUMS && <AlbumsList albums={list}/>}
-        //   {selectedTabTitle === PHOTOS && <PhotosList photos={list}/>}
-        //   {selectedTabTitle === TODOS && <TodosList todos={list}/>}
-        //   {selectedTabTitle === USERS && <UsersList users={list}/>}
-        // </>
-      )}
+    <div className="App">
+      <form onSubmit={onSubmit}>
+        <input type="text" placeholder="input yr name" defaultValue="andrey"/>
+        <br/>
+        <input type="text" placeholder="input yr surname"/>
+        <br/>
+        <input type="email" placeholder="input email"/>
+        <br/>
+        <input type="number" placeholder="input age"/>
+        <br/>
+        <input type="password" placeholder="input password"/>
+        <br/>
+        <br/>
+        <button type="submit">submit</button>
+      </form>
     </div>
   )
-}
+};
+
 export default App;
 
