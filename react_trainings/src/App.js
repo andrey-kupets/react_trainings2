@@ -504,7 +504,7 @@ import './App.css';
 //   //  1.2
 //   //   target: {
 //   //     elements: {
-//   //       firstName,
+//   //       firstName: {value: firstName}, // got it
 //   //       lastName,
 //   //       email,
 //   //       age,
@@ -515,7 +515,7 @@ import './App.css';
 //
 //   // console.log({ firstName, lastName, email, age, password });
 //   // alert(JSON.stringify({
-//   //   firstName: firstName.value,
+//   //   firstName, // got it
 //   //   lastName: lastName.value,
 //   //   email: email.value,
 //   //   age: age.value,
@@ -531,11 +531,11 @@ import './App.css';
 //   }, null, 2));
 //
 // // _form.current.reset(); // ??
-// // _firstName.current.value = '';
-// // _lastName.current.value = '';
-// // _email.current.value = '';
-// // _age.current.value = '';
-// // _password.current.value = '';
+// _firstName.current.value = '';
+// _lastName.current.value = '';
+// _email.current.value = '';
+// _age.current.value = '';
+// _password.current.value = '';
 // };
 //
 //   return (
