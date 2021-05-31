@@ -584,11 +584,24 @@ const App = () => {
 
   const updateUserData = (e) => {
     const {target: { value, name }} = e;
+
+    if (name === 'age' && Number(value) >= 99) {
+      return;
+    }
+
     setUserData({ ...userData, [name]: value })
   };
 
   const handleSubmit = () => {
     alert(JSON.stringify(userData, null, 2));
+    setUserData({
+      ...userData,
+      firstName: '',
+      lastName: '',
+      email: '',
+      age: '',
+      password: '',
+    })
   };
 
   return (
@@ -634,6 +647,9 @@ const App = () => {
       <br/>
       <br/>
       <button onClick={handleSubmit}>submit</button>
+      { userData.age < 25
+        ? <h3>u're green</h3>
+        : <h3>u can do anything</h3>}
     </div>
   )
 };
