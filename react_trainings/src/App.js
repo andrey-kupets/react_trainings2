@@ -564,32 +564,68 @@ import './App.css';
 
 //5.2 Controlled inputs
 const App = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [age, setAge] = useState('');
-  const [password, setPassword] = useState('');
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [age, setAge] = useState('');
+  // const [password, setPassword] = useState('');
+
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    age: '',
+    password: '',
+  });
+
+  const updateUserData = (field, value) => {
+    setUserData({ ...userData, [field]: value })
+  };
 
   const handleSubmit = () => {
-    alert(JSON.stringify({firstName,
-      lastName,
-      email,
-      age,
-      password,
-    }, null, 2));
+    alert(JSON.stringify(userData, null, 2));
   };
 
   return (
     <div className="App">
-      <input value={firstName} onChange={({target: { value }}) => setFirstName(value)} type="text" name="firstName" placeholder="input yr name"/>
+      <input
+        value={userData.firstName}
+        onChange={({target: { value }}) => updateUserData('firstName', value)}
+        type="text"
+        name="firstName"
+        placeholder="input yr name"/>
       <br/>
-      <input value={lastName} onChange={({target: { value }}) => setLastName(value)} type="text" name="lastName" placeholder="input yr surname"/>
+      <input
+        value={userData.lastName}
+        onChange={({target: { value }}) => updateUserData('lastName', value)}
+        type="text"
+        name="lastName"
+        placeholder="input yr surname"
+      />
       <br/>
-      <input value={email} onChange={({target: { value }}) => setEmail(value)} type="email" name="email" placeholder="input email"/>
+      <input
+        value={userData.email}
+        onChange={({target: { value }}) => updateUserData('email', value)}
+        type="email"
+        name="email"
+        placeholder="input email"
+      />
       <br/>
-      <input value={age} onChange={({target: { value }}) => setAge(value)} type="number" name="age" placeholder="input age"/>
+      <input
+        value={userData.age}
+        onChange={({target: { value }}) => updateUserData('age', value)}
+        type="number"
+        name="age"
+        placeholder="input age"
+      />
       <br/>
-      <input value={password} onChange={({target: { value }}) => setPassword(value)} type="password" name="password" placeholder="input password"/>
+      <input
+        value={userData.password}
+        onChange={({target: { value }}) => updateUserData('password', value)}
+        type="password"
+        name="password"
+        placeholder="input password"
+      />
       <br/>
       <br/>
       <button onClick={handleSubmit}>submit</button>
