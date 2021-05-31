@@ -578,8 +578,13 @@ const App = () => {
     password: '',
   });
 
-  const updateUserData = (field, value) => {
-    setUserData({ ...userData, [field]: value })
+  // const updateUserData = (field, value) => {
+  //   setUserData({ ...userData, [field]: value })
+  // };
+
+  const updateUserData = (e) => {
+    const {target: { value, name }} = e;
+    setUserData({ ...userData, [name]: value })
   };
 
   const handleSubmit = () => {
@@ -590,14 +595,14 @@ const App = () => {
     <div className="App">
       <input
         value={userData.firstName}
-        onChange={({target: { value }}) => updateUserData('firstName', value)}
+        onChange={updateUserData}
         type="text"
         name="firstName"
         placeholder="input yr name"/>
       <br/>
       <input
         value={userData.lastName}
-        onChange={({target: { value }}) => updateUserData('lastName', value)}
+        onChange={updateUserData}
         type="text"
         name="lastName"
         placeholder="input yr surname"
@@ -605,7 +610,7 @@ const App = () => {
       <br/>
       <input
         value={userData.email}
-        onChange={({target: { value }}) => updateUserData('email', value)}
+        onChange={updateUserData}
         type="email"
         name="email"
         placeholder="input email"
@@ -613,7 +618,7 @@ const App = () => {
       <br/>
       <input
         value={userData.age}
-        onChange={({target: { value }}) => updateUserData('age', value)}
+        onChange={updateUserData}
         type="number"
         name="age"
         placeholder="input age"
@@ -621,7 +626,7 @@ const App = () => {
       <br/>
       <input
         value={userData.password}
-        onChange={({target: { value }}) => updateUserData('password', value)}
+        onChange={updateUserData}
         type="password"
         name="password"
         placeholder="input password"
