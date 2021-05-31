@@ -493,7 +493,7 @@ import './App.css';
 // // _firstName.current.style.background = 'lightblue';
 //
 //   // const {
-//   //  1.1
+//   //  1.1 by common destructuring
 //   //   target: [
 //   //   { value: firstName },
 //   //   { value: lastName },
@@ -501,7 +501,7 @@ import './App.css';
 //   //   { value: age },
 //   //   { value: password }
 //   // ],
-//   //  1.2
+//   //  1.2 by destructuring of event.target.elements
 //   //   target: {
 //   //     elements: {
 //   //       firstName: {value: firstName}, // got it
@@ -512,7 +512,8 @@ import './App.css';
 //   //     }
 //   //   }
 //   // } = e;
-//
+//   //
+//   // 1.2
 //   // console.log({ firstName, lastName, email, age, password });
 //   // alert(JSON.stringify({
 //   //   firstName, // got it
@@ -560,6 +561,8 @@ import './App.css';
 //
 // export default App;
 
+
+//5.2 Controlled inputs
 const App = () => {
   const [firstName, setFirstName] = useState('');
 
