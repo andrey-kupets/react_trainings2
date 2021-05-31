@@ -565,22 +565,31 @@ import './App.css';
 //5.2 Controlled inputs
 const App = () => {
   const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [age, setAge] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-
+    alert(JSON.stringify({firstName,
+      lastName,
+      email,
+      age,
+      password,
+    }, null, 2));
   };
 
   return (
     <div className="App">
-      <input onChange={({target: { value }}) => setFirstName(value)} type="text" name="firstName" placeholder="input yr name" defaultValue="andrii"/>
+      <input value={firstName} onChange={({target: { value }}) => setFirstName(value)} type="text" name="firstName" placeholder="input yr name"/>
       <br/>
-      <input type="text" name="lastName" placeholder="input yr surname" defaultValue="pinskyi"/>
+      <input value={lastName} onChange={({target: { value }}) => setLastName(value)} type="text" name="lastName" placeholder="input yr surname"/>
       <br/>
-      <input type="email" name="email" placeholder="input email" defaultValue="andre@gmail.com"/>
+      <input value={email} onChange={({target: { value }}) => setEmail(value)} type="email" name="email" placeholder="input email"/>
       <br/>
-      <input type="number" name="age" placeholder="input age" defaultValue="38"/>
+      <input value={age} onChange={({target: { value }}) => setAge(value)} type="number" name="age" placeholder="input age"/>
       <br/>
-      <input type="password" name="password" placeholder="input password" defaultValue="pass777"/>
+      <input value={password} onChange={({target: { value }}) => setPassword(value)} type="password" name="password" placeholder="input password"/>
       <br/>
       <br/>
       <button onClick={handleSubmit}>submit</button>
