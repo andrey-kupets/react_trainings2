@@ -501,7 +501,7 @@ import './App.css';
 //   //   { value: age },
 //   //   { value: password }
 //   // ],
-//   //  1.2 by destructuring of event.target.elements
+//   //  1.2 by destructuring of event.target.elements (need to define an input name)
 //   //   target: {
 //   //     elements: {
 //   //       firstName: {value: firstName}, // got it
