@@ -561,97 +561,118 @@ import './App.css';
 //
 // export default App;
 
-
 //5.2 Controlled inputs
+// const App = () => {
+//   // const [firstName, setFirstName] = useState('');
+//   // const [lastName, setLastName] = useState('');
+//   // const [email, setEmail] = useState('');
+//   // const [age, setAge] = useState('');
+//   // const [password, setPassword] = useState('');
+//
+//   const [userData, setUserData] = useState({
+//     firstName: '',
+//     lastName: '',
+//     email: '',
+//     age: '',
+//     password: '',
+//   });
+//
+//   // const updateUserData = (field, value) => {
+//   //   setUserData({ ...userData, [field]: value })
+//   // };
+//
+//   const updateUserData = (e) => {
+//     const {target: { value, name }} = e;
+//
+//     if (name === 'firstName' && value.split(' ').length > 1) {
+//       setUserData({...userData, [name]: value, lastName: ''});
+//       return;
+//     }
+//
+//     if (name === 'age' && Number(value) >= 99) {
+//       return;
+//     }
+//
+//     setUserData({ ...userData, [name]: value })
+//   };
+//
+//   const handleSubmit = () => {
+//     alert(JSON.stringify(userData, null, 2));
+//     setUserData({
+//       ...userData,
+//       firstName: '',
+//       lastName: '',
+//       email: '',
+//       age: '',
+//       password: '',
+//     })
+//   };
+//
+//   return (
+//     <div className="App">
+//       <input
+//         value={userData.firstName}
+//         onChange={updateUserData}
+//         type="text"
+//         name="firstName"
+//         placeholder="input yr name"/>
+//       <br/>
+//       <input
+//         value={userData.lastName}
+//         onChange={updateUserData}
+//         type="text"
+//         name="lastName"
+//         placeholder="input yr surname"
+//       />
+//       <br/>
+//       <input
+//         value={userData.email}
+//         onChange={updateUserData}
+//         type="email"
+//         name="email"
+//         placeholder="input email"
+//       />
+//       <br/>
+//       <input
+//         value={userData.age}
+//         onChange={updateUserData}
+//         type="number"
+//         name="age"
+//         placeholder="input age"
+//       />
+//       <br/>
+//       <input
+//         value={userData.password}
+//         onChange={updateUserData}
+//         type="password"
+//         name="password"
+//         placeholder="input password"
+//       />
+//       <br/>
+//       <br/>
+//       <button onClick={handleSubmit}>submit</button>
+//       { userData.age < 25
+//         ? <h3>u're green</h3>
+//         : <h3>u can do anything</h3>}
+//     </div>
+//   )
+// };
+//
+// export default App;
+
+// 6. Fethching data through controlled inputs
 const App = () => {
-  // const [firstName, setFirstName] = useState('');
-  // const [lastName, setLastName] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [age, setAge] = useState('');
-  // const [password, setPassword] = useState('');
-
-  const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    age: '',
-    password: '',
-  });
-
-  // const updateUserData = (field, value) => {
-  //   setUserData({ ...userData, [field]: value })
-  // };
-
-  const updateUserData = (e) => {
-    const {target: { value, name }} = e;
-
-    if (name === 'age' && Number(value) >= 99) {
-      return;
-    }
-
-    setUserData({ ...userData, [name]: value })
-  };
-
-  const handleSubmit = () => {
-    alert(JSON.stringify(userData, null, 2));
-    setUserData({
-      ...userData,
-      firstName: '',
-      lastName: '',
-      email: '',
-      age: '',
-      password: '',
-    })
-  };
-
-  return (
-    <div className="App">
-      <input
-        value={userData.firstName}
-        onChange={updateUserData}
-        type="text"
-        name="firstName"
-        placeholder="input yr name"/>
-      <br/>
-      <input
-        value={userData.lastName}
-        onChange={updateUserData}
-        type="text"
-        name="lastName"
-        placeholder="input yr surname"
-      />
-      <br/>
-      <input
-        value={userData.email}
-        onChange={updateUserData}
-        type="email"
-        name="email"
-        placeholder="input email"
-      />
-      <br/>
-      <input
-        value={userData.age}
-        onChange={updateUserData}
-        type="number"
-        name="age"
-        placeholder="input age"
-      />
-      <br/>
-      <input
-        value={userData.password}
-        onChange={updateUserData}
-        type="password"
-        name="password"
-        placeholder="input password"
-      />
-      <br/>
-      <br/>
-      <button onClick={handleSubmit}>submit</button>
-      { userData.age < 25
-        ? <h3>u're green</h3>
-        : <h3>u can do anything</h3>}
-    </div>
-  )
-};
+    return (
+        <div className="App">
+          <input type="text"/>
+          <br/>
+          <br/>
+          <input type="text"/>
+          <br/>
+          <br/>
+          <button>Fetch data</button>
+        </div>
+    )
+}
 
 export default App;
