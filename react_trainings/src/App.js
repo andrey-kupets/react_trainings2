@@ -684,22 +684,23 @@ const App = () => {
   const onSubmit = () => {
     // 1st input validation
     if (!endpoint) {
-      setErrorMessage('first input is required');
-      return;
+      return setErrorMessage('first input is required');
     }
 
-    if (!AVAILABLE_RESOURSES.includes(endpoint)) {
-      setErrorMessage('try from values only: "posts, comments, albums, photos, todos, users"');
-      return;
+    if (!AVAILABLE_RESOURSES.includes(endpoint.trim().toLowerCase())) {
+      return setErrorMessage('try from values only: "posts, comments, albums, photos, todos, users"');
     }
 
-    // 1nd input validation
+    // 2nd input validation
     const idToNum = Number(id);
 
-    if (!idToNum && id !== '') {
-      setErrorMessage('point id as a number');
-      return;
-    };
+    if (!idToNum && id !== '' && idToNum !== 0) {
+      return setErrorMessage('point id as a number');
+    }
+
+    if ((idToNum < 1 || idToNum > 10) && id !== '') {
+      return setErrorMessage('out of range, use 1-10 values');
+    }
 
     fetchData();
 
@@ -708,7 +709,7 @@ const App = () => {
   };
 
   const fetchData = async () => {
-    const rawData = await fetch(`${BASE_URL}/${endpoint}/${id}`);
+    const rawData = await fetch(`${BASE_URL}/${endpoint.trim().toLowerCase()}/${id.trim()}`);
     const dataJSON = await rawData.json();
 
     if (id) {
