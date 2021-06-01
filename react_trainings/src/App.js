@@ -702,10 +702,8 @@ const App = () => {
       return setErrorMessage('out of range, use 1-10 values');
     }
 
-    fetchData();
-
     setErrorMessage('');
-
+    fetchData();
   };
 
   const fetchData = async () => {
