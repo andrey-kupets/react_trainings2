@@ -676,21 +676,34 @@ const App = () => {
   const [endpoint, setEndpoint] = useState('');
   const [id, setId] = useState('');
 
+  const [errorMessage, setErrorMessage] = useState();
+
   const [items, setItems] = useState([]);
   const [singleItem, setSingleItem] = useState(null);
 
   const onSubmit = () => {
     // 1st input validation
-    if (!endpoint) return;
+    if (!endpoint) {
+      setErrorMessage('first input is required');
+      return;
+    }
 
-    if (!AVAILABLE_RESOURSES.includes(endpoint)) return;
+    if (!AVAILABLE_RESOURSES.includes(endpoint)) {
+      setErrorMessage('try from values only: "posts, comments, albums, photos, todos, users"');
+      return;
+    }
 
     // 1nd input validation
     const idToNum = Number(id);
 
-    if (!idToNum && id !== '') return;
+    if (!idToNum && id !== '') {
+      setErrorMessage('point id as a number');
+      return;
+    };
 
     fetchData();
+
+    setErrorMessage('');
 
   };
 
@@ -729,6 +742,10 @@ const App = () => {
       <br/>
       <br/>
       <button onClick={onSubmit}>Fetch data</button>
+
+      <hr/>
+
+      {!!errorMessage && <h2 style={{ color: 'red' }}>{errorMessage}</h2>}
 
       <div style={{width: '400px', textAlign: 'left', padding: '20px',}}>
             <pre style={{ whiteSpace: 'pre-wrap'}}>
