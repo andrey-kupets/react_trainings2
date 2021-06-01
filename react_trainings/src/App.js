@@ -667,11 +667,23 @@ const App = () => {
   const [endpoint, setEndpoint] = useState('');
   const [id, setId] = useState('');
 
+  const [items, setItems] = useState([]);
+  const [singleItem, setSingleItem] = useState(null);
 
   const fetchData = async () => {
     const rawData = await fetch(`${BASE_URL}/${endpoint}/${id}`);
     const dataJSON = await rawData.json();
-    console.log(dataJSON);
+
+    if (id) {
+      setSingleItem(dataJSON);
+      setItems([]);
+      return;
+    }
+
+    setSingleItem(null);
+    setItems(dataJSON);
+
+    // id && dataJSON ? setSingleItem(dataJSON) : setItems(dataJSON);
   };
 
     return (
@@ -693,6 +705,18 @@ const App = () => {
           <br/>
           <br/>
           <button onClick={fetchData}>Fetch data</button>
+
+          <div style={{width: '400px', textAlign: 'left', padding: '20px',}}>
+            <pre style={{ whiteSpace: 'pre-wrap'}}>
+              {singleItem && JSON.stringify(singleItem, null, 2)}
+            </pre>
+          </div>
+
+          <hr/>
+
+          <div>
+            {items && items.map((item) => (<div>{item.name} - {item.email ?? 'N/A'}</div>))}
+          </div>
         </div>
     )
 }
