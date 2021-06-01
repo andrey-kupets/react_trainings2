@@ -663,12 +663,36 @@ import './App.css';
 // 6. Fethching data through controlled inputs
 const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
+const AVAILABLE_RESOURSES = [
+  'posts',
+  'comments',
+  'albums',
+  'photos',
+  'todos',
+  'users'
+];
+
 const App = () => {
   const [endpoint, setEndpoint] = useState('');
   const [id, setId] = useState('');
 
   const [items, setItems] = useState([]);
   const [singleItem, setSingleItem] = useState(null);
+
+  const onSubmit = () => {
+    // 1st input validation
+    if (!endpoint) return;
+
+    if (!AVAILABLE_RESOURSES.includes(endpoint)) return;
+
+    // 1nd input validation
+    const idToNum = Number(id);
+
+    if (!idToNum && id !== '') return;
+
+    fetchData();
+
+  };
 
   const fetchData = async () => {
     const rawData = await fetch(`${BASE_URL}/${endpoint}/${id}`);
@@ -686,39 +710,39 @@ const App = () => {
     // id && dataJSON ? setSingleItem(dataJSON) : setItems(dataJSON);
   };
 
-    return (
-        <div className="App">
-          <input
-            value={endpoint}
-            onChange={({target: {value}}) => setEndpoint(value)}
-            type="text"
-            placeholder="categories"
-          />
-          <br/>
-          <br/>
-          <input
-            value={id}
-            onChange={({target: {value}}) => setId(value)}
-            type="text"
-            placeholder="single item"
-          />
-          <br/>
-          <br/>
-          <button onClick={fetchData}>Fetch data</button>
+  return (
+    <div className="App">
+      <input
+        value={endpoint}
+        onChange={({target: {value}}) => setEndpoint(value)}
+        type="text"
+        placeholder="categories"
+      />
+      <br/>
+      <br/>
+      <input
+        value={id}
+        onChange={({target: {value}}) => setId(value)}
+        type="text"
+        placeholder="single item"
+      />
+      <br/>
+      <br/>
+      <button onClick={onSubmit}>Fetch data</button>
 
-          <div style={{width: '400px', textAlign: 'left', padding: '20px',}}>
+      <div style={{width: '400px', textAlign: 'left', padding: '20px',}}>
             <pre style={{ whiteSpace: 'pre-wrap'}}>
               {singleItem && JSON.stringify(singleItem, null, 2)}
             </pre>
-          </div>
+      </div>
 
-          <hr/>
+      <hr/>
 
-          <div>
-            {items && items.map((item) => (<div>{item.name} - {item.email ?? 'N/A'}</div>))}
-          </div>
-        </div>
-    )
+      <div>
+        {items && items.map((item) => (<div>{item.name} - {item.email ?? 'N/A'}</div>))}
+      </div>
+    </div>
+  )
 }
 
 export default App;
