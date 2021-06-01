@@ -673,8 +673,15 @@ const AVAILABLE_RESOURSES = [
 ];
 
 const App = () => {
-  const [endpoint, setEndpoint] = useState('');
-  const [id, setId] = useState('');
+  // const [endpoint, setEndpoint] = useState('');
+  // const [id, setId] = useState('');
+
+  const [endpointFields, setEndpointFields] = useState({
+    endpoint: '',
+    id: ''
+  });
+
+  const { endpoint, id } = endpointFields;
 
   const [errorMessage, setErrorMessage] = useState();
 
@@ -722,21 +729,27 @@ const App = () => {
     // id && dataJSON ? setSingleItem(dataJSON) : setItems(dataJSON);
   };
 
+  const onFieldUpdate = ({ target: { name, value } }) => {
+    return setEndpointFields({ ...endpointFields, [name]: value });
+  };
+
   return (
     <div className="App">
       <input
         value={endpoint}
-        onChange={({target: {value}}) => setEndpoint(value)}
+        onChange={onFieldUpdate}
         type="text"
         placeholder="categories"
+        name="endpoint"
       />
       <br/>
       <br/>
       <input
         value={id}
-        onChange={({target: {value}}) => setId(value)}
+        onChange={onFieldUpdate}
         type="text"
         placeholder="single item"
+        name="id"
       />
       <br/>
       <br/>
