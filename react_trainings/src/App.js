@@ -661,16 +661,38 @@ import './App.css';
 // export default App;
 
 // 6. Fethching data through controlled inputs
+const BASE_URL = 'https://jsonplaceholder.typicode.com';
+
 const App = () => {
+  const [endpoint, setEndpoint] = useState('');
+  const [id, setId] = useState('');
+
+
+  const fetchData = async () => {
+    const rawData = await fetch(`${BASE_URL}/${endpoint}/${id}`);
+    const dataJSON = await rawData.json();
+    console.log(dataJSON);
+  };
+
     return (
         <div className="App">
-          <input type="text"/>
+          <input
+            value={endpoint}
+            onChange={({target: {value}}) => setEndpoint(value)}
+            type="text"
+            placeholder="categories"
+          />
           <br/>
           <br/>
-          <input type="text"/>
+          <input
+            value={id}
+            onChange={({target: {value}}) => setId(value)}
+            type="text"
+            placeholder="single item"
+          />
           <br/>
           <br/>
-          <button>Fetch data</button>
+          <button onClick={fetchData}>Fetch data</button>
         </div>
     )
 }
