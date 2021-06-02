@@ -688,29 +688,45 @@ const App = () => {
   const [items, setItems] = useState([]);
   const [singleItem, setSingleItem] = useState(null);
 
-  const onSubmit = () => {
+  const validateEndpoint = () => {
     // 1st input validation
     if (!endpoint) {
-      return setErrorMessage('first input is required');
+      setErrorMessage('first input is required');
+      return false;
+    } else if (!AVAILABLE_RESOURSES.includes(endpoint.trim().toLowerCase())) {
+      setErrorMessage('try from values only: "posts, comments, albums, photos, todos, users"');
+      return false;
     }
 
-    if (!AVAILABLE_RESOURSES.includes(endpoint.trim().toLowerCase())) {
-      return setErrorMessage('try from values only: "posts, comments, albums, photos, todos, users"');
-    }
+    return true;
+  };
 
+
+  const validateId = () => {
     // 2nd input validation
     const idToNum = Number(id);
 
     if (!idToNum && id !== '' && idToNum !== 0) {
-      return setErrorMessage('point id as a number');
+      setErrorMessage('point id as a number');
+      return false;
+    } else if ((idToNum < 1 || idToNum > 10) && id !== '') {
+      setErrorMessage('out of range, use 1-10 values');
+      return false;
     }
 
-    if ((idToNum < 1 || idToNum > 10) && id !== '') {
-      return setErrorMessage('out of range, use 1-10 values');
-    }
+    return true;
+  };
 
-    setErrorMessage('');
-    fetchData();
+  const resetErr = () => setErrorMessage('');
+
+  const onSubmit = () => {
+    const isEndpointValid = validateEndpoint();
+    const isIdValid = validateId();
+
+    if (isEndpointValid && isIdValid) {
+      fetchData();
+      resetErr();
+    }
   };
 
   const fetchData = async () => {
