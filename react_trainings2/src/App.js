@@ -21,20 +21,33 @@ export default function App() {
             <li>
               <Link to="/users">Users</Link>
             </li>
+            <li>
+              <Link to="/test">Users</Link>
+            </li>
           </ul>
         </nav>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/about">
-            <About />
+          {/*<Route path="/" exact="true">*/}
+          {/*  <Home />*/}
+          {/*</Route>*/}
+          <Route path="/" component={Home} exact/>
+
+          <Route path="/about" render={(...args) => {
+            console.log(args);
+            return <About/>
+          }}>
+            <About/>
           </Route>
+
           <Route path="/users">
             <Users />
           </Route>
-          <Route path="/">
-            <Home />
+
+          <Route path="/test">
+            {Users}
           </Route>
         </Switch>
       </div>
