@@ -35,12 +35,11 @@ export default function App() {
           {/*</Route>*/}
           <Route path="/" component={Home} exact/>
 
-          <Route path="/about" render={(...args) => {
+          <Route path="/about" render={(args) => {
             console.log(args);
             return <About/>
-          }}>
-            <About/>
-          </Route>
+          }}/>
+
 
           <Route path="/users">
             <Users />
