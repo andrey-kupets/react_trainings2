@@ -40,7 +40,7 @@ export default function App() {
             return <About/>
           }}/>
 
-
+          {/*doesn't conduct props*/}
           <Route path="/users">
             <Users />
           </Route>
@@ -54,14 +54,17 @@ export default function App() {
   );
 }
 
-function Home() {
+function Home(props) {
+  console.log(props)
   return <h2>Home</h2>;
 }
 
-function About() {
+function About(props) {
+  // console.log(props)
   return <h2>About</h2>;
 }
 
-function Users() {
+function Users(props) {
+  console.log(props)
   return <h2>Users</h2>;
 }
