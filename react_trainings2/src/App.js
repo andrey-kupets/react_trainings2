@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
 
 export default function App() {
@@ -47,6 +48,14 @@ export default function App() {
 
           <Route path="/test">
             {Users}
+          </Route>
+
+          {/*<Route>*/}
+          {/*  <h2>PAGE'S NOT FOUND</h2>*/}
+          {/*</Route>*/}
+
+          <Route>
+            <Redirect to="/"/>
           </Route>
         </Switch>
       </div>
