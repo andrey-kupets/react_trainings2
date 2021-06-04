@@ -28,6 +28,9 @@ export default function App() {
             <li>
               <Link to="/posts">Posts</Link>
             </li>
+            <li>
+              <Link to="/posts/1">PostDetails</Link>
+            </li>
           </ul>
         </nav>
 
@@ -55,8 +58,12 @@ export default function App() {
 
           <Route path="/" component={Home} exact/>
 
-          <Route path="/posts">
+          <Route path="/posts" exact>
             <Posts/>
+          </Route>
+
+          <Route path="/posts/1">
+            <PostDetails/>
           </Route>
 
           <Route>
@@ -99,5 +106,35 @@ function Posts(props) {
       </ul>
     </div>
   );
+}
+
+const PostDetails = (props) => {
+  console.log(props);
+  const [post, setPost] = useState([]);
+
+  const fetchData = async () => {
+    const baseUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+
+    const rawData = await fetch(baseUrl);
+    const jsonData = await rawData.json();
+
+    setPost(jsonData);
+    console.log(post);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+    return (
+        <div>
+          {post && (
+            <>
+              <h3>{post.title}</h3>
+              <p>{post.body}</p>
+            </>
+          )}
+        </div>
+    )
 }
 
