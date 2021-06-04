@@ -61,11 +61,9 @@ export default function App() {
 
           <Route path="/" component={Home} exact/>
 
-          <Route path="/posts" exact>
+          <Route path="/posts">
             <Posts/>
           </Route>
-
-          <Route path="/posts/:id" component={PostDetails}/>
 
           <Route>
             <h2>PAGE'S NOT FOUND</h2>
@@ -100,9 +98,18 @@ function Posts(props) {
 
   return (
     <div>
+      {/*don't forget to chenge the order of rendering components */}
       <ul>
         {posts.map((el) => <Link to={`/posts/${el.id}`}><li>{el.id} - {el.title}</li></Link>)}
       </ul>
+
+      <Switch>
+        <Route path="/posts/:id" component={PostDetails} exact/>
+
+        <Route>
+          <Redirect to="/posts"/>
+        </Route>
+      </Switch>
     </div>
   );
 }
@@ -140,8 +147,8 @@ const PostDetails = (props) => {
               <p>{post.body}</p>
 
 
-              <button onClick={() => history.push(`/posts/${+id+1}`)}>go to the next</button>
-              <button onClick={() => history.push(`/posts/${+id+1}`)}>go to the next</button>
+              <button onClick={() => history.push(`/posts/${+id - 1}`)}>go to the previous</button>
+              <button onClick={() => history.push(`/posts/${+id + 1}`)}>go to the next</button>
             </>
           )}
         </div>
