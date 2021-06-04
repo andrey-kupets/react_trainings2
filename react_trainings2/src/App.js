@@ -164,6 +164,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 const TodoContext = createContext();
 
@@ -178,10 +179,19 @@ const TodoContextProvider = ({children}) => {
     setTodos([newTodo, ...todos]);
   }
 
+  const onTodoRemove = (todoId) => {
+    if (!todoId) {
+      return console.error('wrong id value:' , todoId);
+    }
+
+    setTodos(todos.filter(el => el.id !== todoId));
+  }
+
   return (
     <TodoContext.Provider value={{
       todos,
       onTodoCreate,
+      onTodoRemove,
     }}>
       {children}
     </TodoContext.Provider>
@@ -189,10 +199,22 @@ const TodoContextProvider = ({children}) => {
 }
 
 const TodoItem = ({todo}) => {
+  const {onTodoRemove} = useContext(TodoContext);
+
+  const onDeleteTodo = () => {
+    const answer = window.confirm('are u really sure wanting to delete this one?');
+
+    if (answer) {
+    //  ...
+      onTodoRemove(todo.id);
+    }
+  };
+
   return (
     <li>
       <h4>title: {todo.title}</h4>
       <p>description: {todo.description}</p>
+      <button onClick={onDeleteTodo}>delete todo</button>
     </li>
   )
 }
@@ -215,6 +237,7 @@ const AddTodo = () => {
   const [todoValues, setTodoValues] = useState({
     title: '',
     description: '',
+    id: null,
   });
 
   const { onTodoCreate } = useContext(TodoContext);
@@ -223,10 +246,11 @@ const AddTodo = () => {
 
   const onCreate = () => {
   //  onTodoCreate (from context)
-    onTodoCreate(todoValues);
-    setTodoValues({...todoValues,
+    onTodoCreate({ ...todoValues, id: uuidv4() });
+    setTodoValues({
       title: '',
       description: '',
+      id: null,
     })
   }
 
