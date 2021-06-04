@@ -6,6 +6,7 @@ import {
   Link,
   Redirect,
   useLocation,
+  useHistory,
   useParams, useRouteMatch
 } from "react-router-dom";
 
@@ -31,7 +32,7 @@ export default function App() {
               <Link to="/posts">Posts</Link>
             </li>
             <li>
-              <Link to="/posts/1">PostDetails</Link>
+              <Link to="/posts/:id">PostDetails</Link>
             </li>
           </ul>
         </nav>
@@ -113,7 +114,8 @@ const PostDetails = (props) => {
   const { id } = useParams();
   const match = useRouteMatch();
   const location = useLocation();
-  // console.log({params, match, location});
+  const history = useHistory();
+  // console.log({params, match, location, history});
 
   const fetchData = async () => {
     const baseUrl = `https://jsonplaceholder.typicode.com/posts/${id}`;
@@ -126,7 +128,7 @@ const PostDetails = (props) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [id]);
 
     return (
         <div>
@@ -135,6 +137,9 @@ const PostDetails = (props) => {
               <h1>Post Details:</h1>
               <h3>{post.title}</h3>
               <p>{post.body}</p>
+
+
+              <button onClick={() => history.push(`/posts/${+id+1}`)}>go to the next</button>
             </>
           )}
         </div>
