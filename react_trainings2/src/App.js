@@ -158,13 +158,56 @@
 
 //2. CONTEXT
 import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-const App = () => {
+const TodosList = () => {
     return (
         <div>
-            App
+            todos list
         </div>
     )
+}
+
+const CreateTodo = () => {
+    return (
+        <div>
+            create
+        </div>
+    )
+}
+
+const Header = () => {
+    return (
+        <header>
+            <Link to="/">list</Link>
+            <Link to="/create-todo">add new todo</Link>
+        </header>
+    )
+}
+
+const App = () => {
+  return (
+    <main>
+      <Router>
+        <Header/>
+
+        <Switch>
+          <Route path="/" exact>
+            <TodosList/>
+          </Route>
+
+          <Route path="/create-todo">
+            <CreateTodo/>
+          </Route>
+        </Switch>
+      </Router>
+    </main>
+  )
 }
 
 export default App;
