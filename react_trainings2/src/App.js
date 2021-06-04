@@ -4,7 +4,9 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
+  Redirect,
+  useLocation,
+  useParams, useRouteMatch
 } from "react-router-dom";
 
 export default function App() {
@@ -62,9 +64,7 @@ export default function App() {
             <Posts/>
           </Route>
 
-          <Route path="/posts/1">
-            <PostDetails/>
-          </Route>
+          <Route path="/posts/:id" component={PostDetails}/>
 
           <Route>
             <h2>PAGE'S NOT FOUND</h2>
@@ -77,12 +77,10 @@ export default function App() {
 }
 
 function Home(props) {
-  console.log(props)
   return <h2>Home</h2>;
 }
 
 function Posts(props) {
-  console.log(props)
   const [posts, setPosts] = useState([]);
 
   const fetchData = async () => {
@@ -91,8 +89,8 @@ function Posts(props) {
     const rawData = await fetch(baseUrl);
     const jsonData = await rawData.json();
 
-    setPosts(jsonData);
-    console.log(posts);
+    await setPosts(jsonData);
+    console.log(posts)
   };
 
   useEffect(() => {
@@ -102,7 +100,7 @@ function Posts(props) {
   return (
     <div>
       <ul>
-        {posts.map((el) => <li>{el.id} - {el.title}</li>)}
+        {posts.map((el) => <Link to={`/posts/${el.id}`}><li>{el.id} - {el.title}</li></Link>)}
       </ul>
     </div>
   );
@@ -112,14 +110,18 @@ const PostDetails = (props) => {
   console.log(props);
   const [post, setPost] = useState([]);
 
+  const { id } = useParams();
+  const match = useRouteMatch();
+  const location = useLocation();
+  // console.log({params, match, location});
+
   const fetchData = async () => {
-    const baseUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+    const baseUrl = `https://jsonplaceholder.typicode.com/posts/${id}`;
 
     const rawData = await fetch(baseUrl);
     const jsonData = await rawData.json();
 
     setPost(jsonData);
-    console.log(post);
   };
 
   useEffect(() => {
@@ -130,6 +132,7 @@ const PostDetails = (props) => {
         <div>
           {post && (
             <>
+              <h1>Post Details:</h1>
               <h3>{post.title}</h3>
               <p>{post.body}</p>
             </>
