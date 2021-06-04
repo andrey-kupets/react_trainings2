@@ -23,7 +23,7 @@ export default function App() {
               <Link to="/users">Users</Link>
             </li>
             <li>
-              <Link to="/test">Users</Link>
+              <Link to="/test">Test</Link>
             </li>
           </ul>
         </nav>
@@ -47,7 +47,7 @@ export default function App() {
           </Route>
 
           <Route path="/test">
-            {Users}
+            {Test}
           </Route>
 
           {/*<Route>*/}
@@ -76,4 +76,9 @@ function About(props) {
 function Users(props) {
   console.log(props)
   return <h2>Users</h2>;
+}
+
+function Test(props) {
+  console.log(props)
+  return <h2>Test</h2>;
 }
