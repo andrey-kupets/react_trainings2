@@ -157,13 +157,36 @@
 // }
 
 //2. CONTEXT
-import React, {useState} from "react";
+import React, {createContext, useState} from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+
+const TodoContext = createContext();
+
+const TodoContextProvider = ({children}) => {
+  const [todos, setTodos] = useState([]);
+
+  const onTodoCreate = (newTodo) => {
+    if (!newTodo || !newTodo.title || !newTodo.description) {
+      console.error('wrong arg, put smth like "title: ..., description: ..."');
+      return;
+    }
+    setTodos([newTodo, ...todos]);
+  }
+
+  return (
+    <TodoContext.Provider value={{
+      todos,
+      onTodoCreate,
+    }}>
+      {children}
+    </TodoContext.Provider>
+  )
+}
 
 const TodosList = () => {
   return (
@@ -181,12 +204,21 @@ const AddTodo = () => {
 
   const onTodoChange = ({target: {name, value}}) => setTodoValues({...todoValues, [name]: value})
 
+  const onCreate = () => {
+  //  onTodoAdd (from context)
+    setTodoValues({...todoValues,
+      title: '',
+      description: '',
+    })
+  }
+
   return (
     <div>
       <input value={todoValues.title} onChange={onTodoChange} type="text" name="title" placeholder="add title"/>
+      <br/>
       <input value={todoValues.description} onChange={onTodoChange} type="text" name="description" placeholder="add description"/>
-
-      <button>add todo</button>
+      <br/>
+      <button onClick={onCreate}>add todo</button>
     </div>
   )
 }
@@ -202,21 +234,25 @@ const Header = () => {
 
 const App = () => {
   return (
-    <main>
-      <Router>
-        <Header/>
+    <TodoContextProvider>
+      <main>
+        <Router>
+          <Header/>
 
-        <Switch>
-          <Route path="/" exact>
-            <TodosList/>
-          </Route>
+          <div style={{padding: 20}}>
+            <Switch>
+              <Route path="/" exact>
+                <TodosList/>
+              </Route>
 
-          <Route path="/create-todo">
-            <AddTodo/>
-          </Route>
-        </Switch>
-      </Router>
-    </main>
+              <Route path="/create-todo">
+                <AddTodo/>
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </main>
+    </TodoContextProvider>
   )
 }
 
