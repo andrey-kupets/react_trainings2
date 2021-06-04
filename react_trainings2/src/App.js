@@ -157,7 +157,7 @@
 // }
 
 //2. CONTEXT
-import React from "react";
+import React, {useState} from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -166,28 +166,38 @@ import {
 } from "react-router-dom";
 
 const TodosList = () => {
-    return (
-        <div>
-            todos list
-        </div>
-    )
+  return (
+    <div>
+      todos list
+    </div>
+  )
 }
 
-const CreateTodo = () => {
-    return (
-        <div>
-            create
-        </div>
-    )
+const AddTodo = () => {
+  const [todoValues, setTodoValues] = useState({
+    title: '',
+    description: '',
+  });
+
+  const onTodoChange = ({target: {name, value}}) => setTodoValues({...todoValues, [name]: value})
+
+  return (
+    <div>
+      <input value={todoValues.title} onChange={onTodoChange} type="text" name="title" placeholder="add title"/>
+      <input value={todoValues.description} onChange={onTodoChange} type="text" name="description" placeholder="add description"/>
+
+      <button>add todo</button>
+    </div>
+  )
 }
 
 const Header = () => {
-    return (
-        <header>
-            <Link to="/">list</Link>
-            <Link to="/create-todo">add new todo</Link>
-        </header>
-    )
+  return (
+    <header>
+      <Link to="/">list</Link>
+      <Link to="/create-todo">add new todo</Link>
+    </header>
+  )
 }
 
 const App = () => {
@@ -202,7 +212,7 @@ const App = () => {
           </Route>
 
           <Route path="/create-todo">
-            <CreateTodo/>
+            <AddTodo/>
           </Route>
         </Switch>
       </Router>
