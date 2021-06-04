@@ -31,9 +31,9 @@ export default function App() {
             <li>
               <Link to="/posts">Posts</Link>
             </li>
-            <li>
-              <Link to="/posts/:id">PostDetails</Link>
-            </li>
+            {/*<li>*/}
+            {/*  <Link to="/posts/:id">PostDetails</Link>*/}
+            {/*</li>*/}
           </ul>
         </nav>
 
@@ -114,7 +114,8 @@ const PostDetails = (props) => {
   const { id } = useParams();
   const match = useRouteMatch();
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistory(); // or
+  // const { history } = props; // ...if starting route conducts props...
   // console.log({params, match, location, history});
 
   const fetchData = async () => {
@@ -139,6 +140,7 @@ const PostDetails = (props) => {
               <p>{post.body}</p>
 
 
+              <button onClick={() => history.push(`/posts/${+id+1}`)}>go to the next</button>
               <button onClick={() => history.push(`/posts/${+id+1}`)}>go to the next</button>
             </>
           )}
