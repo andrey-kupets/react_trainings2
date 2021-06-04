@@ -157,7 +157,7 @@
 // }
 
 //2. CONTEXT
-import React, {createContext, useState} from "react";
+import React, {createContext, useContext, useState} from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -188,10 +188,25 @@ const TodoContextProvider = ({children}) => {
   )
 }
 
+const TodoItem = ({todo}) => {
+  return (
+    <li>
+      <h4>title: {todo.title}</h4>
+      <p>description: {todo.description}</p>
+    </li>
+  )
+}
+
 const TodosList = () => {
+  const { todos } = useContext(TodoContext);
+  console.log(todos);
   return (
     <div>
-      todos list
+      <ul>
+        {todos.map(el => (
+          <TodoItem  key={el.title + el.description} todo={el}/>
+        ))}
+      </ul>
     </div>
   )
 }
@@ -202,10 +217,13 @@ const AddTodo = () => {
     description: '',
   });
 
+  const { onTodoCreate } = useContext(TodoContext);
+
   const onTodoChange = ({target: {name, value}}) => setTodoValues({...todoValues, [name]: value})
 
   const onCreate = () => {
-  //  onTodoAdd (from context)
+  //  onTodoCreate (from context)
+    onTodoCreate(todoValues);
     setTodoValues({...todoValues,
       title: '',
       description: '',
