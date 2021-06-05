@@ -211,7 +211,7 @@ const TodoContextProvider = ({children}) => {
   )
 }
 
-const TodoItem = ({todo, onTodoRemove, isDoneToggle}) => {
+const TodoItem = ({todo, onTodoRemove, isDoneToggle, isDoneTodoIdStatus}) => {
   const onDeleteTodo = () => {
     const answer = window.confirm('are u really sure wanting to delete this one?');
 
@@ -224,10 +224,16 @@ const TodoItem = ({todo, onTodoRemove, isDoneToggle}) => {
 
   return (
     <li>
-      <h4>title: {todo.title}</h4>
-      <p>description: {todo.description}</p>
-      <button onClick={onDeleteTodo}>delete todo</button>
-      <button onClick={onMarkIsDoneToggle}>mark as done</button>
+      <div style={{
+        textDecoration: isDoneTodoIdStatus ? 'line-through' : ''
+      }}>
+        <h4>title: {todo.title}</h4>
+        <p>description: {todo.description}</p>
+        <button onClick={onDeleteTodo}>delete todo</button>
+        <button
+          style={{backgroundColor: isDoneTodoIdStatus ? 'palegreen' : 'red'}}
+          onClick={onMarkIsDoneToggle}>mark as {isDoneTodoIdStatus ? 'active' : 'done'}</button>
+      </div>
     </li>
   )
 }
@@ -250,6 +256,7 @@ const TodosList = () => {
             todo={el}
             onTodoRemove={onTodoRemove}
             isDoneToggle={isDoneToggle}
+            isDoneTodoIdStatus={doneTodosIds.includes(el.id)}
           />
         ))}
       </ul>
