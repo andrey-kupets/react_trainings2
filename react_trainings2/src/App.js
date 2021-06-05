@@ -170,6 +170,7 @@ const TodoContext = createContext();
 
 const TodoContextProvider = ({children}) => {
   const [todos, setTodos] = useState([]);
+  const [doneTodosIds, setDoneTodosIds] = useState([]);
 
   const onTodoCreate = (newTodo) => {
     if (!newTodo || !newTodo.title || !newTodo.description) {
@@ -187,46 +188,69 @@ const TodoContextProvider = ({children}) => {
     setTodos(todos.filter(el => el.id !== todoId));
   }
 
+  const isDoneToggle = (todoId) => {
+    const isTodoMarkedAsDone = doneTodosIds.includes(todoId);
+
+    if (isTodoMarkedAsDone) {
+      return setDoneTodosIds(doneTodosIds.filter(id => id !== todoId));
+    }
+
+    setDoneTodosIds([...doneTodosIds, todoId]);
+  }
+
   return (
     <TodoContext.Provider value={{
       todos,
       onTodoCreate,
       onTodoRemove,
+      isDoneToggle,
+      doneTodosIds,
     }}>
       {children}
     </TodoContext.Provider>
   )
 }
 
-const TodoItem = ({todo}) => {
-  const {onTodoRemove} = useContext(TodoContext);
-
+const TodoItem = ({todo, onTodoRemove, isDoneToggle}) => {
   const onDeleteTodo = () => {
     const answer = window.confirm('are u really sure wanting to delete this one?');
 
     if (answer) {
-    //  ...
       onTodoRemove(todo.id);
     }
   };
+
+  const onMarkIsDoneToggle = () => isDoneToggle(todo.id);
 
   return (
     <li>
       <h4>title: {todo.title}</h4>
       <p>description: {todo.description}</p>
       <button onClick={onDeleteTodo}>delete todo</button>
+      <button onClick={onMarkIsDoneToggle}>mark as done</button>
     </li>
   )
 }
 
 const TodosList = () => {
-  const { todos } = useContext(TodoContext);
-  console.log(todos);
+  const {
+    todos,
+    onTodoRemove,
+    isDoneToggle,
+    doneTodosIds,
+  } = useContext(TodoContext);
+  console.log(doneTodosIds);
+
   return (
     <div>
       <ul>
         {todos.map(el => (
-          <TodoItem  key={el.title + el.description} todo={el}/>
+          <TodoItem
+            key={el.title + el.description}
+            todo={el}
+            onTodoRemove={onTodoRemove}
+            isDoneToggle={isDoneToggle}
+          />
         ))}
       </ul>
     </div>
