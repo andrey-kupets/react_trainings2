@@ -156,7 +156,7 @@
 //     )
 // }
 
-//2. CONTEXT
+//2. CONTEXT (TODOS LIST)
 import React, {createContext, useContext, useState} from "react";
 import {
   BrowserRouter as Router,
@@ -186,6 +186,7 @@ const TodoContextProvider = ({children}) => {
     }
 
     setTodos(todos.filter(el => el.id !== todoId));
+    setDoneTodosIds(doneTodosIds.filter(id => id !== todoId));
   }
 
   const isDoneToggle = (todoId) => {
@@ -297,10 +298,23 @@ const AddTodo = () => {
 }
 
 const Header = () => {
+  const {
+    todos,
+    doneTodosIds,
+    } = useContext(TodoContext);
+
   return (
     <header>
       <Link to="/">list</Link>
       <Link to="/create-todo">add new todo</Link>
+
+      {/*just as a spacer*/}
+      <div style={{flex: 1}}/>
+
+      <h3 style={{marginRight: 16}}>todos totals: {todos.length}</h3>
+      <h3 style={{marginRight: 16}}>active todos: {todos.length - doneTodosIds.length}</h3>
+      <h3 style={{marginRight: 16}}>done todos: {doneTodosIds.length}</h3>
+
     </header>
   )
 }
