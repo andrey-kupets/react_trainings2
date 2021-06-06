@@ -501,7 +501,7 @@ import './App.css';
 //   //   { value: age },
 //   //   { value: password }
 //   // ],
-//   //  1.2 by destructuring of event.target.elements (need to define an input name)
+//   //  1.2 by destructuring of event.target.elements (need to define an input name), doesn't depend on order of obj. fields => 0, 1, 2 as an array indexes
 //   //   target: {
 //   //     elements: {
 //   //       firstName: {value: firstName}, // got it
@@ -523,6 +523,7 @@ import './App.css';
 //   //   password: password.value
 //   // }, null, 2));
 //
+//   2. by ref
 //   alert(JSON.stringify({
 //     firstName: _firstName.current.value,
 //     lastName: _lastName.current.value,
