@@ -352,8 +352,10 @@ const App = () => {
   const [counter, setCounter] = useState(0);
 
   const inc = () => {
-    // setCounter(counter+1); setState => async Func (NOT A PROMISE). All of logic must put into the useEffect-hook
-    setCounter((prev) => prev + 1); // useState in cb style, use if value of new state depends on previous one
+    // setTimeout(() => { // clearly seen the difference in common & cb styles of setState using
+      setCounter(counter + 1)
+    // },1000); // setState => async Func (NOT A PROMISE). All of logic must put into the useEffect-hook
+    // setCounter((prev) => prev + 1); // useState in cb style, use if value of new state depends on previous one
     console.log(counter);
   }
 
