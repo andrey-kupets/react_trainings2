@@ -157,189 +157,214 @@
 // }
 
 //2. CONTEXT (TODOS LIST)
-import React, {createContext, useContext, useState} from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid';
+// import React, {createContext, useContext, useState} from "react";
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link
+// } from "react-router-dom";
+// import { v4 as uuidv4 } from 'uuid';
+//
+// const TodoContext = createContext();
+//
+// const TodoContextProvider = ({children}) => {
+//   const [todos, setTodos] = useState([]);
+//   const [doneTodosIds, setDoneTodosIds] = useState([]);
+//
+//   const onTodoCreate = (newTodo) => {
+//     if (!newTodo || !newTodo.title || !newTodo.description) {
+//       console.error('wrong arg, put smth like "title: ..., description: ..."');
+//       return;
+//     }
+//     setTodos([newTodo, ...todos]);
+//   }
+//
+//   const onTodoRemove = (todoId) => {
+//     if (!todoId) {
+//       return console.error('wrong id value:' , todoId);
+//     }
+//
+//     setTodos(todos.filter(el => el.id !== todoId));
+//     setDoneTodosIds(doneTodosIds.filter(id => id !== todoId));
+//   }
+//
+//   const isDoneToggle = (todoId) => {
+//     const isTodoMarkedAsDone = doneTodosIds.includes(todoId);
+//
+//     if (isTodoMarkedAsDone) {
+//       return setDoneTodosIds(doneTodosIds.filter(id => id !== todoId));
+//     }
+//
+//     setDoneTodosIds([...doneTodosIds, todoId]);
+//   }
+//
+//   return (
+//     <TodoContext.Provider value={{
+//       todos,
+//       onTodoCreate,
+//       onTodoRemove,
+//       isDoneToggle,
+//       doneTodosIds,
+//     }}>
+//       {children}
+//     </TodoContext.Provider>
+//   )
+// }
+//
+// const TodoItem = ({todo, onTodoRemove, isDoneToggle, isDoneTodoIdStatus}) => {
+//   const onDeleteTodo = () => {
+//     const answer = window.confirm('are u really sure wanting to delete this one?');
+//
+//     if (answer) {
+//       onTodoRemove(todo.id);
+//     }
+//   };
+//
+//   const onMarkIsDoneToggle = () => isDoneToggle(todo.id);
+//
+//   return (
+//     <li>
+//       <div style={{
+//         textDecoration: isDoneTodoIdStatus ? 'line-through' : ''
+//       }}>
+//         <h4>title: {todo.title}</h4>
+//         <p>description: {todo.description}</p>
+//         <button onClick={onDeleteTodo}>delete todo</button>
+//         <button
+//           style={{backgroundColor: isDoneTodoIdStatus ? 'palegreen' : 'red'}}
+//           onClick={onMarkIsDoneToggle}>mark as {isDoneTodoIdStatus ? 'active' : 'done'}</button>
+//       </div>
+//     </li>
+//   )
+// }
+//
+// const TodosList = () => {
+//   const {
+//     todos,
+//     onTodoRemove,
+//     isDoneToggle,
+//     doneTodosIds,
+//   } = useContext(TodoContext);
+//   console.log(doneTodosIds);
+//
+//   return (
+//     <div>
+//       <ul>
+//         {todos.map(el => (
+//           <TodoItem
+//             key={el.title + el.description}
+//             todo={el}
+//             onTodoRemove={onTodoRemove}
+//             isDoneToggle={isDoneToggle}
+//             isDoneTodoIdStatus={doneTodosIds.includes(el.id)}
+//           />
+//         ))}
+//       </ul>
+//     </div>
+//   )
+// }
+//
+// const AddTodo = () => {
+//   const [todoValues, setTodoValues] = useState({
+//     title: '',
+//     description: '',
+//     id: null,
+//   });
+//
+//   const { onTodoCreate } = useContext(TodoContext);
+//
+//   const onTodoChange = ({target: {name, value}}) => setTodoValues({...todoValues, [name]: value})
+//
+//   const onCreate = () => {
+//   //  onTodoCreate (from context)
+//     onTodoCreate({ ...todoValues, id: uuidv4() });
+//     setTodoValues({
+//       title: '',
+//       description: '',
+//       id: null,
+//     })
+//   }
+//
+//   return (
+//     <div>
+//       <input value={todoValues.title} onChange={onTodoChange} type="text" name="title" placeholder="add title"/>
+//       <br/>
+//       <input value={todoValues.description} onChange={onTodoChange} type="text" name="description" placeholder="add description"/>
+//       <br/>
+//       <button onClick={onCreate}>add todo</button>
+//     </div>
+//   )
+// }
+//
+// const Header = () => {
+//   const {
+//     todos,
+//     doneTodosIds,
+//     } = useContext(TodoContext);
+//
+//   return (
+//     <header>
+//       <Link to="/">list</Link>
+//       <Link to="/create-todo">add new todo</Link>
+//
+//       {/*just as a spacer*/}
+//       <div style={{flex: 1}}/>
+//
+//       <h3 style={{marginRight: 16}}>todos totals: {todos.length}</h3>
+//       <h3 style={{marginRight: 16}}>active todos: {todos.length - doneTodosIds.length}</h3>
+//       <h3 style={{marginRight: 16}}>done todos: {doneTodosIds.length}</h3>
+//
+//     </header>
+//   )
+// }
+//
+// const App = () => {
+//   return (
+//     <TodoContextProvider>
+//       <main>
+//         <Router>
+//           <Header/>
+//
+//           <div style={{padding: 20}}>
+//             <Switch>
+//               <Route path="/" exact>
+//                 <TodosList/>
+//               </Route>
+//
+//               <Route path="/create-todo">
+//                 <AddTodo/>
+//               </Route>
+//             </Switch>
+//           </div>
+//         </Router>
+//       </main>
+//     </TodoContextProvider>
+//   )
+// }
+//
+// export default App;
 
-const TodoContext = createContext();
-
-const TodoContextProvider = ({children}) => {
-  const [todos, setTodos] = useState([]);
-  const [doneTodosIds, setDoneTodosIds] = useState([]);
-
-  const onTodoCreate = (newTodo) => {
-    if (!newTodo || !newTodo.title || !newTodo.description) {
-      console.error('wrong arg, put smth like "title: ..., description: ..."');
-      return;
-    }
-    setTodos([newTodo, ...todos]);
-  }
-
-  const onTodoRemove = (todoId) => {
-    if (!todoId) {
-      return console.error('wrong id value:' , todoId);
-    }
-
-    setTodos(todos.filter(el => el.id !== todoId));
-    setDoneTodosIds(doneTodosIds.filter(id => id !== todoId));
-  }
-
-  const isDoneToggle = (todoId) => {
-    const isTodoMarkedAsDone = doneTodosIds.includes(todoId);
-
-    if (isTodoMarkedAsDone) {
-      return setDoneTodosIds(doneTodosIds.filter(id => id !== todoId));
-    }
-
-    setDoneTodosIds([...doneTodosIds, todoId]);
-  }
-
-  return (
-    <TodoContext.Provider value={{
-      todos,
-      onTodoCreate,
-      onTodoRemove,
-      isDoneToggle,
-      doneTodosIds,
-    }}>
-      {children}
-    </TodoContext.Provider>
-  )
-}
-
-const TodoItem = ({todo, onTodoRemove, isDoneToggle, isDoneTodoIdStatus}) => {
-  const onDeleteTodo = () => {
-    const answer = window.confirm('are u really sure wanting to delete this one?');
-
-    if (answer) {
-      onTodoRemove(todo.id);
-    }
-  };
-
-  const onMarkIsDoneToggle = () => isDoneToggle(todo.id);
-
-  return (
-    <li>
-      <div style={{
-        textDecoration: isDoneTodoIdStatus ? 'line-through' : ''
-      }}>
-        <h4>title: {todo.title}</h4>
-        <p>description: {todo.description}</p>
-        <button onClick={onDeleteTodo}>delete todo</button>
-        <button
-          style={{backgroundColor: isDoneTodoIdStatus ? 'palegreen' : 'red'}}
-          onClick={onMarkIsDoneToggle}>mark as {isDoneTodoIdStatus ? 'active' : 'done'}</button>
-      </div>
-    </li>
-  )
-}
-
-const TodosList = () => {
-  const {
-    todos,
-    onTodoRemove,
-    isDoneToggle,
-    doneTodosIds,
-  } = useContext(TodoContext);
-  console.log(doneTodosIds);
-
-  return (
-    <div>
-      <ul>
-        {todos.map(el => (
-          <TodoItem
-            key={el.title + el.description}
-            todo={el}
-            onTodoRemove={onTodoRemove}
-            isDoneToggle={isDoneToggle}
-            isDoneTodoIdStatus={doneTodosIds.includes(el.id)}
-          />
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-const AddTodo = () => {
-  const [todoValues, setTodoValues] = useState({
-    title: '',
-    description: '',
-    id: null,
-  });
-
-  const { onTodoCreate } = useContext(TodoContext);
-
-  const onTodoChange = ({target: {name, value}}) => setTodoValues({...todoValues, [name]: value})
-
-  const onCreate = () => {
-  //  onTodoCreate (from context)
-    onTodoCreate({ ...todoValues, id: uuidv4() });
-    setTodoValues({
-      title: '',
-      description: '',
-      id: null,
-    })
-  }
-
-  return (
-    <div>
-      <input value={todoValues.title} onChange={onTodoChange} type="text" name="title" placeholder="add title"/>
-      <br/>
-      <input value={todoValues.description} onChange={onTodoChange} type="text" name="description" placeholder="add description"/>
-      <br/>
-      <button onClick={onCreate}>add todo</button>
-    </div>
-  )
-}
-
-const Header = () => {
-  const {
-    todos,
-    doneTodosIds,
-    } = useContext(TodoContext);
-
-  return (
-    <header>
-      <Link to="/">list</Link>
-      <Link to="/create-todo">add new todo</Link>
-
-      {/*just as a spacer*/}
-      <div style={{flex: 1}}/>
-
-      <h3 style={{marginRight: 16}}>todos totals: {todos.length}</h3>
-      <h3 style={{marginRight: 16}}>active todos: {todos.length - doneTodosIds.length}</h3>
-      <h3 style={{marginRight: 16}}>done todos: {doneTodosIds.length}</h3>
-
-    </header>
-  )
-}
+// 3. REACT HOOKS
+import React, {useEffect, useState} from "react";
 
 const App = () => {
+  const [counter, setCounter] = useState(0);
+
+  const inc = () => {
+    // setCounter(counter+1); setState => async Func (NOT A PROMISE). All of logic must put into the useEffect-hook
+    setCounter((prev) => prev + 1); // useState in cb style, use if value of new state depends on previous one
+    console.log(counter);
+  }
+
+  // useEffect(() => {
+  //   console.log(counter);
+  // }, [counter])
+
   return (
-    <TodoContextProvider>
-      <main>
-        <Router>
-          <Header/>
-
-          <div style={{padding: 20}}>
-            <Switch>
-              <Route path="/" exact>
-                <TodosList/>
-              </Route>
-
-              <Route path="/create-todo">
-                <AddTodo/>
-              </Route>
-            </Switch>
-          </div>
-        </Router>
-      </main>
-    </TodoContextProvider>
+    <div>
+      <button onClick={inc}>{counter}</button>
+    </div>
   )
 }
 
