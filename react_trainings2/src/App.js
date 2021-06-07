@@ -352,7 +352,10 @@ const App = () => {
   const [counter, setCounter] = useState(0);
   const [counter2, setCounter2] = useState(2);
 
-  const fn = (a, b) => Math.pow(a, b);
+  const fn = (a, b) => {
+    console.log('called');
+    return Math.pow(a, b)
+  };
 
   const inc = () => {
     // setTimeout(() => { // clearly seen the difference in common & cb styles of setState using
@@ -374,7 +377,9 @@ const App = () => {
     return fn(4, counter2);
   }, [counter2]);
 
-  console.log(logic)
+  // const logic = fn(4, 2); // fn called every time u change any state
+  console.log(logic); // fn called only necessary deps is
+
 
   return (
     <div>
