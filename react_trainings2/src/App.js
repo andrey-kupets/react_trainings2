@@ -390,7 +390,7 @@ const App = () => {
   const inc3 = useCallback(() => { // memorize function
     console.log(counter3);
     setCounter3(counter3 + 1);
-  },[counter]);
+  },[counter3]); // [] always = 0, [...] = new ...
 
 
   return (
