@@ -346,7 +346,7 @@
 // export default App;
 
 // 3. REACT HOOKS
-import React, {memo, useEffect, useMemo, useState} from "react";
+import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
 
 const fn = (a, b) => {
   console.log('called');
@@ -361,6 +361,7 @@ const Child = memo(() => { // memorize components
 const App = () => {
   const [counter, setCounter] = useState(0);
   const [counter2, setCounter2] = useState(2);
+  const [counter3, setCounter3] = useState(0);
 
   const inc = () => {
     // setTimeout(() => { // clearly seen the difference in common & cb styles of setState using
@@ -386,12 +387,20 @@ const App = () => {
   console.log(logic); // fn called only necessary deps is
 
 
+  const inc3 = useCallback(() => { // memorize function
+    console.log(counter3);
+    setCounter3(counter3 + 1);
+  },[counter]);
+
+
   return (
     <div>
       <button onClick={inc}>{counter}</button>
       <button onClick={inc2}>{counter2}</button>
+      <button onClick={inc3}>{counter3}cb</button>
 
-      <Child/>
+      {/*<Child/>*/}
+      <Child inc={inc}/>
     </div>
   )
 }
