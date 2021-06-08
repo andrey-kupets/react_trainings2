@@ -424,6 +424,7 @@ const App = () => {
   return (
     <div>
       <h2>{counter}</h2>
+      <button onClick={() => dispatch({type: 'INC_CUSTOM', payload: Math.random()})}>random</button>
       <button onClick={() => dispatch({type: 'INC'})}>+</button>
       <button onClick={() => dispatch({type: 'DEC'})}>-</button>
       <button onClick={() => dispatch({type: 'RESET'})}>reset</button>
