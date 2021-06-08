@@ -410,17 +410,25 @@
 // 4. REDUX
 
 import React from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 const App = () => {
 
+  const counter = useSelector(({counter}) => {
+    console.log('counter', counter);// why twice?? & what launch the Fn? => The selector is called with the store state (=>doc)
+    return counter;
+  });
 
-    return (
-        <div>
-            <button onClick={}>+</button>
-            <button>-</button>
-            <button>reset</button>
-        </div>
-    )
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h2>{counter}</h2>
+      <button onClick={() => dispatch({type: 'INC'})}>+</button>
+      <button onClick={() => dispatch({type: 'DEC'})}>-</button>
+      <button onClick={() => dispatch({type: 'RESET'})}>reset</button>
+    </div>
+  )
 }
 
 export default App;
