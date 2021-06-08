@@ -346,63 +346,81 @@
 // export default App;
 
 // 3. REACT HOOKS
-import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
+// import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
+//
+// const fn = (a, b) => {
+//   console.log('called');
+//   return Math.pow(a, b)
+// };
+//
+// const Child = memo(() => { // memorize components
+//   console.log('child rerender');
+//   return (<h2>Child Component</h2>)
+// })
+//
+// const App = () => {
+//   const [counter, setCounter] = useState(0);
+//   const [counter2, setCounter2] = useState(2);
+//   const [counter3, setCounter3] = useState(0);
+//
+//   const inc = () => {
+//     // setTimeout(() => { // clearly seen the difference in common & cb styles of setState using
+//       setCounter(counter + 1)
+//     // },1000); // setState => async Func (NOT A PROMISE). All of logic must put into the useEffect-hook
+//     // setCounter((prev) => prev + 1); // useState in cb style, use if value of new state depends on previous one
+//     console.log(counter);
+//   }
+//
+//   // useEffect(() => {
+//   //   console.log(counter);
+//   // }, [counter])
+//
+//   const inc2 = () => {
+//     setCounter2(prev => prev + 1);
+//   };
+//
+//   const logic = useMemo(() => {
+//     return fn(4, counter2);
+//   }, [counter2]);
+//
+//   // const logic = fn(4, 2); // fn called every time u change any state
+//   console.log(logic); // fn called only necessary deps is
+//
+//
+//   const inc3 = useCallback(() => { // memorize function
+//     console.log(counter3);
+//     setCounter3(prev => prev + 1);
+//   },[]); // [] always = 0, [...] = new ...
+//
+//
+//   return (
+//     <div>
+//       <button onClick={inc}>{counter}</button>
+//       <button onClick={inc2}>{counter2}</button>
+//       <button onClick={inc3}>{counter3}cb</button>
+//
+//       {/*<Child/>*/}
+//       <Child inc={inc3}/>
+//     </div>
+//   )
+// }
+//
+// export default App;
 
-const fn = (a, b) => {
-  console.log('called');
-  return Math.pow(a, b)
-};
+// 4. REDUX
 
-const Child = memo(() => { // memorize components
-  console.log('child rerender');
-  return (<h2>Child Component</h2>)
-})
+import React from "react";
 
 const App = () => {
-  const [counter, setCounter] = useState(0);
-  const [counter2, setCounter2] = useState(2);
-  const [counter3, setCounter3] = useState(0);
-
-  const inc = () => {
-    // setTimeout(() => { // clearly seen the difference in common & cb styles of setState using
-      setCounter(counter + 1)
-    // },1000); // setState => async Func (NOT A PROMISE). All of logic must put into the useEffect-hook
-    // setCounter((prev) => prev + 1); // useState in cb style, use if value of new state depends on previous one
-    console.log(counter);
-  }
-
-  // useEffect(() => {
-  //   console.log(counter);
-  // }, [counter])
-
-  const inc2 = () => {
-    setCounter2(prev => prev + 1);
-  };
-
-  const logic = useMemo(() => {
-    return fn(4, counter2);
-  }, [counter2]);
-
-  // const logic = fn(4, 2); // fn called every time u change any state
-  console.log(logic); // fn called only necessary deps is
 
 
-  const inc3 = useCallback(() => { // memorize function
-    console.log(counter3);
-    setCounter3(counter3 + 1);
-  },[counter3]); // [] always = 0, [...] = new ...
-
-
-  return (
-    <div>
-      <button onClick={inc}>{counter}</button>
-      <button onClick={inc2}>{counter2}</button>
-      <button onClick={inc3}>{counter3}cb</button>
-
-      {/*<Child/>*/}
-      <Child inc={inc}/>
-    </div>
-  )
+    return (
+        <div>
+            <button onClick={}>+</button>
+            <button>-</button>
+            <button>reset</button>
+        </div>
+    )
 }
 
 export default App;
