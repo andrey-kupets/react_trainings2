@@ -6,22 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import {createStore} from "redux";
 import {Provider} from "react-redux";
 
+import {reducer} from "./redux/reducers/counter-reducer";
 
-const initialState = {
-  counter: 0,
-}
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'INC_CUSTOM': return {...state, counter: ((state.counter = 1) * action.payload)}; // ?? what the cb style is?
-    case 'INC': return {...state, counter: (state.counter + 1)}; // ?? what the cb style is?
-    case 'DEC': return {...state, counter: state.counter - 1};
-    case 'RESET': return {...state, counter: 0};
-    default:
-      console.log(`action ${action.type} doesn't exist`);
-      return state;
-  }
-}
 
 const store = createStore(
   reducer,

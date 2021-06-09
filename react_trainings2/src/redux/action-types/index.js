@@ -1,0 +1,5 @@
+const ON_USERS_LOADED = 'ON_USERS_LOADED';
+
+export {
+  ON_USERS_LOADED,
+}
