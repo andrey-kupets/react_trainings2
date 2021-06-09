@@ -409,8 +409,27 @@
 
 // 4. REDUX
 
-import React from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
+
+const PhotosList = () => {
+  const fetchData = async () => {
+    const raw = await fetch(`https://dummyapi.io/data/api/user?limit=10`, {
+      headers: {
+        'app-id': 'lTE5abbDxdjGplutvTuc'
+      }
+    });
+    const jsonData = await raw.json();
+    console.log(jsonData)
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [])
+
+
+  return <h1>PhotosList</h1>
+}
 
 const App = () => {
 
@@ -423,6 +442,8 @@ const App = () => {
 
   return (
     <div>
+      {!!(counter % 2) && <PhotosList/>}
+
       <h2>{counter}</h2>
       <button onClick={() => dispatch({type: 'INC_CUSTOM', payload: Math.random()})}>random</button>
       <button onClick={() => dispatch({type: 'INC'})}>+</button>
