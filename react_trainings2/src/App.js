@@ -411,6 +411,7 @@
 
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {dec, inc, random, reset} from "./redux/action-creators";
 
 const PhotosList = () => {
   const fetchData = async () => {
@@ -433,7 +434,7 @@ const PhotosList = () => {
 
 const App = () => {
 
-  const counter = useSelector(({counter}) => {
+  const counter = useSelector(({counterReducer: {counter}}) => {
     console.log('counter', counter);// why twice?? & what launch the Fn? => The selector is called with the store state (=>doc)
     return counter;
   });
@@ -445,10 +446,10 @@ const App = () => {
       {!!(counter % 2) && <PhotosList/>}
 
       <h2>{counter}</h2>
-      <button onClick={() => dispatch({type: 'INC_CUSTOM', payload: Math.random()})}>random</button>
-      <button onClick={() => dispatch({type: 'INC'})}>+</button>
-      <button onClick={() => dispatch({type: 'DEC'})}>-</button>
-      <button onClick={() => dispatch({type: 'RESET'})}>reset</button>
+      <button onClick={() => dispatch(random(Math.random()))}>random</button>
+      <button onClick={() => dispatch(inc())}>+</button>
+      <button onClick={() => dispatch(dec())}>-</button>
+      <button onClick={() => dispatch(reset())}>reset</button>
     </div>
   )
 }
