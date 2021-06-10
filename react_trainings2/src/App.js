@@ -412,8 +412,11 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {dec, inc, random, reset} from "./redux/action-creators";
+import {ON_USERS_LOADED} from "./redux/action-types";
 
 const PhotosList = () => {
+  const dispatch = useDispatch();
+
   const fetchData = async () => {
     const raw = await fetch(`https://dummyapi.io/data/api/user?limit=10`, {
       headers: {
@@ -421,8 +424,12 @@ const PhotosList = () => {
       }
     });
     const jsonData = await raw.json();
-    console.log(jsonData)
+    console.log(jsonData);
+
+    dispatch({type: ON_USERS_LOADED, payload: jsonData.data});
   }
+
+
 
   useEffect(() => {
     fetchData();
