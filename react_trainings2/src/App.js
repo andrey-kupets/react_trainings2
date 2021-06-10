@@ -411,8 +411,7 @@
 
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {dec, inc, random, reset} from "./redux/action-creators";
-import {ON_USERS_LOADED} from "./redux/action-types";
+import {dec, getUsersDataFromApi, inc, random, reset} from "./redux/action-creators";
 
 const PhotosList = () => {
   const dispatch = useDispatch();
@@ -428,14 +427,18 @@ const PhotosList = () => {
     const jsonData = await raw.json();
     console.log(jsonData);
 
-    dispatch({type: ON_USERS_LOADED, payload: jsonData.data});
+    dispatch(getUsersDataFromApi(jsonData.data));
   }
 
 
 
   useEffect(() => {
-    fetchData();
+    if (!users.length) { // don't get request every time u render component
+      fetchData();
+    }
+
   }, [])
+
 
 
   return (
