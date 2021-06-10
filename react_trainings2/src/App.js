@@ -417,6 +417,8 @@ import {ON_USERS_LOADED} from "./redux/action-types";
 const PhotosList = () => {
   const dispatch = useDispatch();
 
+  const users = useSelector(({userReducer: {users}}) => users);
+
   const fetchData = async () => {
     const raw = await fetch(`https://dummyapi.io/data/api/user?limit=10`, {
       headers: {
@@ -436,7 +438,11 @@ const PhotosList = () => {
   }, [])
 
 
-  return <h1>PhotosList</h1>
+  return (
+    <div>
+      {users.map(el => <img key={el.id} src={el.picture} alt={el.firstName}/>)}
+    </div>
+  )
 }
 
 const App = () => {
