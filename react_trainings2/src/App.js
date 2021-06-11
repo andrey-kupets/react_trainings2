@@ -433,7 +433,6 @@ const PhotosList = () => {
       }
     });
     const jsonData = await raw.json();
-    console.log(jsonData);
 
     dispatch(getUsersDataFromApi(jsonData.data));
   }
@@ -473,7 +472,7 @@ const PhotosList = () => {
 const App = () => {
 
   const counter = useSelector(({counterReducer: {counter}}) => {
-    console.log('counter', counter);// why twice?? & what launch the Fn? => The selector is called with the store state (=>doc)
+    // console.log('counter', counter);// why twice?? & what launch the Fn? => The selector is called with the store state (=>doc)
     return counter;
   });
 
