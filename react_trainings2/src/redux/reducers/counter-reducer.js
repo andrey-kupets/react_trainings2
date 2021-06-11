@@ -7,6 +7,7 @@ import {
 
 const initialState = {
   counter: 0,
+  isAllowedToChange: true, // false - to forbid some actions with counter
 }
 
 const reducer = (state = initialState, action) => {

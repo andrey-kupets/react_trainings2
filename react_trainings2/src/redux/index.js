@@ -1,16 +1,38 @@
 import {applyMiddleware, createStore} from "redux";
 import {reducer} from "./reducers";
+import {
+  CUSTOM,
+  DEC,
+  INC,
+  RESET
+} from "./action-types";
 
 const logger = (store) => (next) => (action) =>{
-  console.log(store.getState())
-
+  console.log('action', action)
   let result = next(action);
-  console.log(result);
-  console.log(store.getState())
+  console.log('next state', store.getState())
   return result;
-}
+};
 
-const middlewares = [logger];
+const protectCounter = (store) => (next) => (action) =>{
+  const counterActions = [
+    CUSTOM,
+    DEC,
+    INC,
+    RESET
+  ];
+
+  const { isAllowedToChange } = store.getState().counterReducer // this field is for simplest way to allow some actions via state
+
+  if (!isAllowedToChange && counterActions.includes(action.type)) {
+    console.log(`u're not allowed to modify counter`);
+    return;
+  }
+
+  next(action);
+};
+
+const middlewares = [protectCounter, logger];
 
 export const store = createStore(
   reducer,
