@@ -5,7 +5,9 @@ import {
   RESET,
 } from '../action-types';
 
-const initialState = {
+const initFromLS = localStorage.getItem('COUNTER_OBJECT');
+
+const initialState = initFromLS ? JSON.parse(initFromLS) : {
   counter: 0,
   isAllowedToChange: true, // false - to forbid some actions with counter
 }
