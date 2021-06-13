@@ -506,6 +506,8 @@ const Products = () => {
         <div key={el.id}>
           <img style={{ height: 200, width: 200}} src={el.image} alt={el.title}/>
           <p>{el.title}</p>
+          <p>Price: {el.price}</p>
+          <p>Category: {el.category}</p>
         </div>
       ))}
     </div>

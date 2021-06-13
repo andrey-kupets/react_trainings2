@@ -15,6 +15,7 @@ const loadProducts = () => async (dispatch) => {
     const rawData = await fetch('https://fakestoreapi.com/products');
     const jsonData = await rawData.json();
     dispatch(setProducts(jsonData));
+    // dispatch(setProducts(jsonData.filter(el => el.price > 100))); // as example of logic applying at the action...
   } catch (e) {
     console.error(e);
   } finally {
