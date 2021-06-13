@@ -420,9 +420,8 @@ import {
   setToFiring,
   startProductsLoading,
   endProductsLoading,
-  setProducts,
+  setProducts, loadProducts,
 } from "./redux/action-creators";
-import {logDOM} from "@testing-library/react";
 
 // const PhotosList = () => {
 //   const dispatch = useDispatch();
@@ -475,24 +474,25 @@ import {logDOM} from "@testing-library/react";
 
 const Products = () => {
   const { products, isLoading } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
-  console.log(products, isLoading);
   const dispatch = useDispatch();
 
-  const fetchProductsData = async () => {
-    try {
-      dispatch(startProductsLoading());
-      const rawData = await fetch('https://fakestoreapi.com/products');
-      const jsonData = await rawData.json();
-      dispatch(setProducts(jsonData));
-    } catch (e) {
-      console.error(e);
-    } finally {
-      dispatch(endProductsLoading());
-    }
-  }
+  // change by redux-thunk
+  // const fetchProductsData = async () => {
+  //   try {
+  //     dispatch(startProductsLoading());
+  //     const rawData = await fetch('https://fakestoreapi.com/products');
+  //     const jsonData = await rawData.json();
+  //     dispatch(setProducts(jsonData));
+  //   } catch (e) {
+  //     console.error(e);
+  //   } finally {
+  //     dispatch(endProductsLoading());
+  //   }
+  // }
 
   useEffect(() => {
-    fetchProductsData();
+    // fetchProductsData();
+    dispatch(loadProducts());
   }, [])
 
   return (

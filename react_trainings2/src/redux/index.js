@@ -6,6 +6,7 @@ import {
   INC,
   RESET
 } from "./action-types";
+import thunk from "redux-thunk";
 
 const logger = (store) => (next) => (action) =>{
   console.log('action', action)
@@ -39,7 +40,7 @@ const persister = (store) => (next) => (action) => {
   localStorage.setItem('COUNTER_OBJECT', JSON.stringify(counterReducer));
 }
 
-const middlewares = [protectCounter, /*logger, */ persister];
+const middlewares = [thunk, protectCounter, /*logger, */ persister];
 
 export const store = createStore(
   reducer,
