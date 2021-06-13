@@ -417,8 +417,12 @@ import {
   inc,
   random, removeFromFiring,
   reset,
-  setToFiring
+  setToFiring,
+  startProductsLoading,
+  endProductsLoading,
+  setProducts,
 } from "./redux/action-creators";
+import {logDOM} from "@testing-library/react";
 
 // const PhotosList = () => {
 //   const dispatch = useDispatch();
@@ -470,12 +474,41 @@ import {
 // }
 
 const Products = () => {
+  const { products, isLoading } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
+  console.log(products, isLoading);
+  const dispatch = useDispatch();
 
+  const fetchProductsData = async () => {
+    try {
+      dispatch(startProductsLoading());
+      const rawData = await fetch('https://fakestoreapi.com/products');
+      const jsonData = await rawData.json();
+      dispatch(setProducts(jsonData));
+    } catch (e) {
+      console.error(e);
+    } finally {
+      dispatch(endProductsLoading());
+    }
+  }
+
+  useEffect(() => {
+    fetchProductsData();
+  }, [])
 
   return (
-    <h2>
-      products list
-    </h2>
+    <div>
+      {isLoading && (
+        <h2 style={{ color: 'red' }}>LOADING...</h2>
+      )}
+      {
+        // !isLoading && products.length && // may or may not
+        products.map(el => (
+        <div key={el.id}>
+          <img style={{ height: 200, width: 200}} src={el.image} alt={el.title}/>
+          <p>{el.title}</p>
+        </div>
+      ))}
+    </div>
   )
 }
 
