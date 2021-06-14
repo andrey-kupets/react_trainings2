@@ -16,6 +16,7 @@ header {
   height: 50px;
   background: lavenderblush;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0 16px;
 }
@@ -24,4 +25,8 @@ header a {
   font-size: 18px;
   font-weight: bold;
   margin-right: 14px;
+}
+
+header span {
+  margin-right: 10px;
 }
