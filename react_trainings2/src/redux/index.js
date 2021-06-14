@@ -40,18 +40,18 @@ const persister = (store) => (next) => (action) => {
   localStorage.setItem('COUNTER_OBJECT', JSON.stringify(counterReducer));
 }
 
-const customThunk = (store) => (next) => async (action) => {
-  if (typeof action === 'function') {
-    await action(store.dispatch);
-    console.log(store.dispatch);
-    return;
-  }
+// const customThunk = (store) => (next) => async (action) => {
+//   if (typeof action === 'function') {
+//     await action(store.dispatch);
+//     console.log(store.dispatch);
+//     return;
+//   }
+//
+//   return next(action);
+// };
 
-  return next(action);
-};
-
-const middlewares = [customThunk, protectCounter, /*logger, */ persister];
-// const middlewares = [thunk, protectCounter, /*logger, */ persister];
+// const middlewares = [customThunk, protectCounter, /*logger, */ persister];
+const middlewares = [thunk, protectCounter, /*logger, */ persister];
 
 export const store = createStore(
   reducer,

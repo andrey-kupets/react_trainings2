@@ -472,6 +472,24 @@ import {
 //   )
 // }
 
+const Header = () => {
+
+  return (
+    <header>
+      <h2>HEADER</h2>
+      <div>
+        <span>
+          wishlist: 0
+        </span>
+        <span>
+          cart: 0
+        </span>
+      </div>
+    </header>
+  )
+
+}
+
 const Products = () => {
   const { products, isLoading } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
   const dispatch = useDispatch();
@@ -526,7 +544,7 @@ const App = () => {
   return (
     <div>
       {/*{!!(counter % 2) && <PhotosList/>}*/}
-
+      <Header/>
       <Products/>
 
       <h2>{counter}</h2>
