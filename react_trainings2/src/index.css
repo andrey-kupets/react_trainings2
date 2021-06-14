@@ -30,3 +30,13 @@ header a {
 header span {
   margin-right: 10px;
 }
+
+.product-item {
+  width: 30%;
+  margin: 16px;
+}
+
+.product-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -514,14 +514,14 @@ const Products = () => {
   }, [])
 
   return (
-    <div>
+    <div className='product-wrapper'>
       {isLoading && (
         <h2 style={{ color: 'red' }}>LOADING...</h2>
       )}
       {
         // !isLoading && products.length && // may or may not
         products.map(el => (
-        <div key={el.id}>
+        <div key={el.id} className='product-item'>
           <img style={{ height: 200, width: 200}} src={el.image} alt={el.title}/>
           <p>{el.title}</p>
           <p>Price: {el.price}</p>
