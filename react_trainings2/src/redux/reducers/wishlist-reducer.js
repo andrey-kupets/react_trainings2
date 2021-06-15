@@ -15,7 +15,8 @@ const reducer = (state = initialState, action) => {
     };
     case REMOVE_PRODUCT_FROM_WISHLIST: return {
       ...state,
-      productsInWishlist: [...state.productsInWishlist.filter(el => el !== action.payload)]
+      // productsInWishlist: [...state.productsInWishlist.filter(el => el !== action.payload)]
+      productsInWishlist: state.productsInWishlist.filter(el => el !== action.payload)
     };
     default:
       console.log(`action ${action.type} doesn't exist`);

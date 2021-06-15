@@ -15,7 +15,8 @@ const reducer = (state = initialState, action) => {
     };
     case REMOVE_PRODUCT_FROM_CART: return {
       ...state,
-      productsInCart: [...state.productsInCart.filter(el => el !== action.payload)]
+      // productsInCart: [...state.productsInCart.filter(el => el !== action.payload)]
+      productsInCart: state.productsInCart.filter(el => el !== action.payload)
     };
     default:
       console.log(`action ${action.type} doesn't exist`);
