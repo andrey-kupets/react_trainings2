@@ -421,6 +421,7 @@ import {
   startProductsLoading,
   endProductsLoading,
   setProducts, loadProducts,
+  toggleItemInCart,
 } from "./redux/action-creators";
 
 // const PhotosList = () => {
@@ -473,6 +474,9 @@ import {
 // }
 
 const Header = () => {
+  // const  productsInCart  = useSelector(({cart: { productsInCart }}) => productsInCart) // may so
+  // const  productsInCart  = useSelector(store => store.cart.productsInCart); // or so
+  const { productsInCart } = useSelector(store => store.cart); // but like this way
 
   return (
     <header>
@@ -482,7 +486,7 @@ const Header = () => {
           wishlist: 0
         </span>
         <span>
-          cart: 0
+          cart: {productsInCart.length}
         </span>
       </div>
     </header>
@@ -492,6 +496,7 @@ const Header = () => {
 
 const Products = () => {
   const { products, isLoading } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
+  const { productsInCart } = useSelector(store => store.cart);
   const dispatch = useDispatch();
 
   // change by redux-thunk
@@ -526,8 +531,15 @@ const Products = () => {
           <p>{el.title}</p>
           <p>Price: {el.price}</p>
           <p>Category: {el.category}</p>
-          <button style={{marginRight: 6}}>add to wishlist</button>
-          <button>add to cart</button>
+          <button>add to wishlist</button>
+          <button
+            style={{
+              background: productsInCart.includes(el.id) ? 'coral' : 'lightgreen'
+            }}
+            onClick={() => dispatch(toggleItemInCart(el.id))}>{
+              productsInCart.includes(el.id) ? 'remove from cart' : 'add to cart'
+            }
+          </button>
         </div>
       ))}
     </div>

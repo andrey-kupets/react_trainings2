@@ -31,6 +31,10 @@ header span {
   margin-right: 10px;
 }
 
+header button {
+  margin-right: 6px;
+}
+
 .product-item {
   width: 30%;
   margin: 16px;
@@ -40,3 +44,4 @@ header span {
   display: flex;
   flex-wrap: wrap;
 }
+
