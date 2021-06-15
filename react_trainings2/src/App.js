@@ -526,6 +526,8 @@ const Products = () => {
           <p>{el.title}</p>
           <p>Price: {el.price}</p>
           <p>Category: {el.category}</p>
+          <button style={{marginRight: 6}}>add to wishlist</button>
+          <button>add to cart</button>
         </div>
       ))}
     </div>
