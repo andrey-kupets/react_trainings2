@@ -3,7 +3,9 @@ import {
   REMOVE_PRODUCT_FROM_CART,
 } from '../action-types';
 
-const initialState = {
+const initFromLS = localStorage.getItem('CART');
+
+const initialState = initFromLS ? JSON.parse(initFromLS) : {
   productsInCart: [],
 }
 

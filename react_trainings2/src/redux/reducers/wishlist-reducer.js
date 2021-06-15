@@ -3,7 +3,10 @@ import {
   REMOVE_PRODUCT_FROM_WISHLIST,
 } from '../action-types';
 
-const initialState = {
+
+const initFromLS = localStorage.getItem('WISHLIST');
+
+const initialState = initFromLS ? JSON.parse(initFromLS) : {
   productsInWishlist: [],
 }
 
