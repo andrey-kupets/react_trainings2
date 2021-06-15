@@ -421,7 +421,7 @@ import {
   startProductsLoading,
   endProductsLoading,
   setProducts, loadProducts,
-  toggleItemInCart,
+  toggleItemInCart, toggleItemInWishlist,
 } from "./redux/action-creators";
 
 // const PhotosList = () => {
@@ -477,13 +477,14 @@ const Header = () => {
   // const  productsInCart  = useSelector(({cart: { productsInCart }}) => productsInCart) // may so
   // const  productsInCart  = useSelector(store => store.cart.productsInCart); // or so
   const { productsInCart } = useSelector(store => store.cart); // but like this way
+  const { productsInWishlist } = useSelector(store => store.wishlist); // but like this way
 
   return (
     <header>
       <h2>HEADER</h2>
       <div>
         <span>
-          wishlist: 0
+          wishlist: {productsInWishlist.length}
         </span>
         <span>
           cart: {productsInCart.length}
@@ -497,6 +498,7 @@ const Header = () => {
 const Products = () => {
   const { products, isLoading } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
   const { productsInCart } = useSelector(store => store.cart);
+  const { productsInWishlist } = useSelector(store => store.wishlist);
   const dispatch = useDispatch();
 
   // change by redux-thunk
@@ -531,7 +533,14 @@ const Products = () => {
           <p>{el.title}</p>
           <p>Price: {el.price}</p>
           <p>Category: {el.category}</p>
-          <button>add to wishlist</button>
+          <button
+            style={{
+              background: productsInWishlist.includes(el.id) ? 'coral' : 'lightgreen'
+            }}
+            onClick={() => dispatch(toggleItemInWishlist(el.id))}>{
+              productsInWishlist.includes(el.id) ? 'remove from wishlist' : 'add to wishlist'
+          }
+          </button>
           <button
             style={{
               background: productsInCart.includes(el.id) ? 'coral' : 'lightgreen'
