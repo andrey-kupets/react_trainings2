@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
       productsInCart: state.productsInCart.filter(el => el !== action.payload)
     };
     default:
-      console.log(`action ${action.type} doesn't exist`);
+      // console.log(`action ${action.type} doesn't exist`);
       return state;
   }
 }

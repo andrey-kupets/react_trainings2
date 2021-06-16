@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
     }
 
     default:
-      console.log(`action ${action.type} doesn't exist`);
+      // console.log(`action ${action.type} doesn't exist`);
       return state;
   }
 }

@@ -52,7 +52,8 @@ const persister = (store) => (next) => (action) => {
 //   return next(action);
 // };
 
-const middlewares = [thunk, protectCounter, logger,  persister];
+const middlewares = [thunk, protectCounter,  persister];
+// const middlewares = [thunk, protectCounter, logger,  persister];
 
 export const store = createStore(
   reducer,

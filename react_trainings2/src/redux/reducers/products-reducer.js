@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
     case START_PRODUCTS_LOADING: return {...state, isLoading: true};
     case END_PRODUCTS_LOADING: return {...state, isLoading: false};
     default:
-      console.log(`action ${action.type} doesn't exist`);
+      // console.log(`action ${action.type} doesn't exist`);
       return state;
   }
 }

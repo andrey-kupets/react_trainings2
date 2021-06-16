@@ -22,7 +22,7 @@ const reducer = (state = initialState, action) => {
       productsInWishlist: state.productsInWishlist.filter(el => el !== action.payload)
     };
     default:
-      console.log(`action ${action.type} doesn't exist`);
+      // console.log(`action ${action.type} doesn't exist`);
       return state;
   }
 }

@@ -25,7 +25,7 @@ export const Products = () => {
 
   useEffect(() => {
     // fetchProductsData();
-    dispatch(loadProducts());
+    dispatch(loadProducts({limit: 5}));
   }, [])
 
   return (

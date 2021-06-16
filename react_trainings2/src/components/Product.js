@@ -22,6 +22,7 @@ export const Product = ({product, onCartClick, onWishlistClick, isInCart, isInWi
       isInCart ? 'remove from cart' : 'add to cart'
     }
     </button>
+    <hr/>
   </div>
 )
 
