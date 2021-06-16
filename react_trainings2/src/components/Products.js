@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {loadProducts, toggleItemInCart, toggleItemInWishlist} from "../redux/action-creators";
-
+import { Product } from "./Product";
 
 export const Products = () => {
   const { products, isLoading } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
@@ -34,30 +34,16 @@ export const Products = () => {
         <h2 style={{ color: 'red' }}>LOADING...</h2>
       )}
       {
-        // !isLoading && products.length && // may or may not
+        !isLoading && products.length && // may or may not
         products.map(el => (
-          <div key={el.id} className='product-item'>
-            <img style={{ height: 200, width: 200}} src={el.image} alt={el.title}/>
-            <p>{el.title}</p>
-            <p>Price: {el.price}</p>
-            <p>Category: {el.category}</p>
-            <button
-              style={{
-                background: productsInWishlist.includes(el.id) ? 'coral' : 'lightgreen'
-              }}
-              onClick={() => dispatch(toggleItemInWishlist(el.id))}>{
-              productsInWishlist.includes(el.id) ? 'remove from wishlist' : 'add to wishlist'
-            }
-            </button>
-            <button
-              style={{
-                background: productsInCart.includes(el.id) ? 'coral' : 'lightgreen'
-              }}
-              onClick={() => dispatch(toggleItemInCart(el.id))}>{
-              productsInCart.includes(el.id) ? 'remove from cart' : 'add to cart'
-            }
-            </button>
-          </div>
+          <Product
+            key={el.id}
+            product={el}
+            onCartClick={() => dispatch(toggleItemInCart(el.id))}
+            onWishlistClick={() => dispatch(toggleItemInWishlist(el.id))}
+            isInCart={productsInCart.includes(el.id)}
+            isInWishlist={productsInWishlist.includes(el.id)}
+          />
         ))}
     </div>
   )
