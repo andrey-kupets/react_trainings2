@@ -17,7 +17,7 @@ const loadProducts = () => async (dispatch) => {
     dispatch(setProducts(jsonData));
     // dispatch(setProducts(jsonData.filter(el => el.price > 100))); // as example of logic applying at the action...
   } catch (e) {
-    console.error(e);
+    console.error(e); 
   } finally {
     dispatch(endProductsLoading());
   }

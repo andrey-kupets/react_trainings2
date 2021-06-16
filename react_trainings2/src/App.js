@@ -297,7 +297,7 @@
 //   )
 // }
 //
-// const Header = () => {
+// const HeaderComp.js = () => {
 //   const {
 //     todos,
 //     doneTodosIds,
@@ -324,7 +324,7 @@
 //     <TodoContextProvider>
 //       <main>
 //         <Router>
-//           <Header/>
+//           <HeaderComp.js/>
 //
 //           <div style={{padding: 20}}>
 //             <Switch>
@@ -409,163 +409,11 @@
 
 // 4. REDUX
 
-import React, {useEffect, useMemo} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {
-  dec,
-  getUsersDataFromApi,
-  inc,
-  random, removeFromFiring,
-  reset,
-  setToFiring,
-  startProductsLoading,
-  endProductsLoading,
-  setProducts, loadProducts,
-  toggleItemInCart, toggleItemInWishlist,
-} from "./redux/action-creators";
+import {dec, inc, random, reset,} from "./redux/action-creators";
+import {Header, PhotosList, Products} from "./components";
 
-// const PhotosList = () => {
-//   const dispatch = useDispatch();
-//
-//   const users = useSelector(({userReducer: {users}}) => users);
-//   const employeesToFiring = useSelector(({userReducer: {employeesToFiring}}) => employeesToFiring)
-//
-//   const fetchData = async () => {
-//     const raw = await fetch(`https://dummyapi.io/data/api/user?limit=10`, {
-//       headers: {
-//         'app-id': 'lTE5abbDxdjGplutvTuc'
-//       }
-//     });
-//     const jsonData = await raw.json();
-//
-//     dispatch(getUsersDataFromApi(jsonData.data));
-//   }
-//
-//
-//   const toggleFiring = (id) => {
-//     const answer = !employeesToFiring.includes(id) && window.confirm(`do u really wanna delete this item from a list?`)
-//     answer ? dispatch(setToFiring(id)) : employeesToFiring.includes(id) && dispatch(removeFromFiring(id))
-//   }
-//
-//   useEffect(() => {
-//     if (!users.length) { // don't get request every time u render component
-//       fetchData();
-//     }
-//
-//   }, [])
-//
-//
-//   // filter: grayscale(1);
-//   return (
-//     <div>
-//       {users.map(el => <img
-//         style={{
-//           filter: employeesToFiring.includes(el.id)
-//           ? 'blur(3px)'
-//           : ''
-//         }}
-//         onClick={() => toggleFiring(el.id)}
-//         key={el.id}
-//         src={el.picture}
-//         alt={el.firstName}
-//       />)}
-//     </div>
-//   )
-// }
-
-const Header = () => {
-  const { products } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
-  // const  productsInCart  = useSelector(({cart: { productsInCart }}) => productsInCart) // may so
-  // const  productsInCart  = useSelector(store => store.cart.productsInCart); // or so
-  const { productsInCart } = useSelector(store => store.cart); // but like this way
-  const { productsInWishlist } = useSelector(store => store.wishlist); // but like this way
-
-  const addToCartSum = useMemo(() => {
-    return products
-      .filter(el => productsInCart.includes(el.id))
-      .reduce((acc, el) => acc += el.price, 0);
-  }, [products, productsInCart]);
-  const addToWishlistSum = useMemo(() => {
-    return products
-      .filter(el => productsInWishlist.includes(el.id))
-      .reduce((acc, el) => acc += el.price, 0);
-  }, [products, productsInWishlist]);
-
-  return (
-    <header>
-      <h2>HEADER</h2>
-      <div>
-        <span>
-          wishlist: {productsInWishlist.length} ( $ {addToWishlistSum})
-        </span>
-        <span>
-          cart: {productsInCart.length} ( $ {addToCartSum})
-        </span>
-      </div>
-    </header>
-  )
-
-}
-
-const Products = () => {
-  const { products, isLoading } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
-  const { productsInCart } = useSelector(store => store.cart);
-  const { productsInWishlist } = useSelector(store => store.wishlist);
-  const dispatch = useDispatch();
-
-  // change by redux-thunk
-  // const fetchProductsData = async () => {
-  //   try {
-  //     dispatch(startProductsLoading());
-  //     const rawData = await fetch('https://fakestoreapi.com/products');
-  //     const jsonData = await rawData.json();
-  //     dispatch(setProducts(jsonData));
-  //   } catch (e) {
-  //     console.error(e);
-  //   } finally {
-  //     dispatch(endProductsLoading());
-  //   }
-  // }
-
-  useEffect(() => {
-    // fetchProductsData();
-    dispatch(loadProducts());
-  }, [])
-
-  return (
-    <div className='product-wrapper'>
-      {isLoading && (
-        <h2 style={{ color: 'red' }}>LOADING...</h2>
-      )}
-      {
-        // !isLoading && products.length && // may or may not
-        products.map(el => (
-        <div key={el.id} className='product-item'>
-          <img style={{ height: 200, width: 200}} src={el.image} alt={el.title}/>
-          <p>{el.title}</p>
-          <p>Price: {el.price}</p>
-          <p>Category: {el.category}</p>
-          <button
-            style={{
-              background: productsInWishlist.includes(el.id) ? 'coral' : 'lightgreen'
-            }}
-            onClick={() => dispatch(toggleItemInWishlist(el.id))}>{
-              productsInWishlist.includes(el.id) ? 'remove from wishlist' : 'add to wishlist'
-          }
-          </button>
-          <button
-            style={{
-              background: productsInCart.includes(el.id) ? 'coral' : 'lightgreen'
-            }}
-            onClick={() => dispatch(toggleItemInCart(el.id))}>{
-              productsInCart.includes(el.id) ? 'remove from cart' : 'add to cart'
-            }
-          </button>
-        </div>
-      ))}
-    </div>
-  )
-}
 
 const App = () => {
 
@@ -578,15 +426,20 @@ const App = () => {
 
   return (
     <div>
-      {/*{!!(counter % 2) && <PhotosList/>}*/}
       <Header/>
       <Products/>
+      <hr/>
 
-      <h2>{counter}</h2>
-      <button onClick={() => dispatch(random(Math.random()))}>random</button>
-      <button onClick={() => dispatch(inc())}>+</button>
-      <button onClick={() => dispatch(dec())}>-</button>
-      <button onClick={() => dispatch(reset())}>reset</button>
+      <div>
+        <h1>Rest Trainings</h1>
+        <h2>{counter}</h2>
+        <button onClick={() => dispatch(random(Math.random()))}>random</button>
+        <button onClick={() => dispatch(inc())}>+</button>
+        <button onClick={() => dispatch(dec())}>-</button>
+        <button onClick={() => dispatch(reset())}>reset</button>
+
+        {!!(counter % 2) && <PhotosList/>}
+      </div>
     </div>
   )
 }
