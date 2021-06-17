@@ -444,16 +444,16 @@ const App = () => {
           <Route path='/products' exact>
             <Products/>
           </Route>
-          <hr/>
-          <Route path='/products/:id' exact>
+          {/*<hr/>*/}
+          <Route path='/products/:id'>
             <ProductDetails/>
           </Route>
 
-          <Route path='/cart' exact>
+          <Route path='/cart'>
             <div>cart</div>
           </Route>
 
-          <Route path='/wishlist' exact>
+          <Route path='/wishlist'>
             <div>wishlist</div>
           </Route>
         </Switch>

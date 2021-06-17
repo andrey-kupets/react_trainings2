@@ -1,7 +1,7 @@
 import React from "react";
 
 export const Product = ({product, onCartClick, onWishlistClick, isInCart, isInWishlist}) => (
-  <div key={product.id} className='product-item'>
+  <div key={product.id}>
     <img style={{ height: 200, width: 200}} src={product.image} alt={product.title}/>
     <p>{product.title}</p>
     <p>Price: {product.price}</p>

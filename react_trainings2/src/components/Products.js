@@ -1,5 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
+import {
+  BrowserRouter as Router,
+  useHistory
+} from "react-router-dom";
+
 import {loadProducts, toggleItemInCart, toggleItemInWishlist} from "../redux/action-creators";
 import { Product } from "./Product";
 
@@ -10,6 +15,7 @@ export const Products = () => {
   const { productsInCart } = useSelector(store => store.cart);
   const { productsInWishlist } = useSelector(store => store.wishlist);
   const [currentLimit, setCurrentLimit] = useState(LIMIT_STEP);
+  const history = useHistory();
   const dispatch = useDispatch();
 
   // change by redux-thunk
@@ -40,14 +46,15 @@ export const Products = () => {
         {
           !isLoading && products.length && // may or may not
           products.map(el => (
-            <Product
-              key={el.id}
-              product={el}
-              onCartClick={() => dispatch(toggleItemInCart(el.id))}
-              onWishlistClick={() => dispatch(toggleItemInWishlist(el.id))}
-              isInCart={productsInCart.includes(el.id)}
-              isInWishlist={productsInWishlist.includes(el.id)}
-            />
+            <div key={el.id} className='product-item' onClick={() => history.push(`/products/${el.id}`)}>
+              <Product
+                product={el}
+                onCartClick={() => dispatch(toggleItemInCart(el.id))}
+                onWishlistClick={() => dispatch(toggleItemInWishlist(el.id))}
+                isInCart={productsInCart.includes(el.id)}
+                isInWishlist={productsInWishlist.includes(el.id)}
+              />
+            </div>
           ))}
 
       </div>
