@@ -412,7 +412,14 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {dec, inc, random, reset,} from "./redux/action-creators";
-import {Header, PhotosList, Products} from "./components";
+import {Header, PhotosList, Products, ProductDetails} from "./components";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  Link
+} from "react-router-dom";
 
 
 const App = () => {
@@ -425,22 +432,45 @@ const App = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
-      <Header/>
-      <Products/>
-      <hr/>
-
+    <Router>
       <div>
-        <h1>Rest Trainings</h1>
-        <h2>{counter}</h2>
-        <button onClick={() => dispatch(random(Math.random()))}>random</button>
-        <button onClick={() => dispatch(inc())}>+</button>
-        <button onClick={() => dispatch(dec())}>-</button>
-        <button onClick={() => dispatch(reset())}>reset</button>
+        <Header/>
 
-        {!!(counter % 2) && <PhotosList/>}
+        <Switch>
+          <Route path='/' exact>
+            <Redirect to='/products'/>
+          </Route>
+
+          <Route path='/products' exact>
+            <Products/>
+          </Route>
+          <hr/>
+          <Route path='/products/:id' exact>
+            <ProductDetails/>
+          </Route>
+
+          <Route path='/cart' exact>
+            <div>cart</div>
+          </Route>
+
+          <Route path='/wishlist' exact>
+            <div>wishlist</div>
+          </Route>
+        </Switch>
+
+
+        <div>
+          <h1>Rest Trainings</h1>
+          <h2>{counter}</h2>
+          <button onClick={() => dispatch(random(Math.random()))}>random</button>
+          <button onClick={() => dispatch(inc())}>+</button>
+          <button onClick={() => dispatch(dec())}>-</button>
+          <button onClick={() => dispatch(reset())}>reset</button>
+
+          {!!(counter % 2) && <PhotosList/>}
+        </div>
       </div>
-    </div>
+    </Router>
   )
 }
 

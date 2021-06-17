@@ -1,12 +1,15 @@
 import {useDispatch, useSelector} from "react-redux";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {loadProducts, toggleItemInCart, toggleItemInWishlist} from "../redux/action-creators";
 import { Product } from "./Product";
+
+const LIMIT_STEP = 5;
 
 export const Products = () => {
   const { products, isLoading } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
   const { productsInCart } = useSelector(store => store.cart);
   const { productsInWishlist } = useSelector(store => store.wishlist);
+  const [currentLimit, setCurrentLimit] = useState(LIMIT_STEP);
   const dispatch = useDispatch();
 
   // change by redux-thunk
@@ -25,26 +28,30 @@ export const Products = () => {
 
   useEffect(() => {
     // fetchProductsData();
-    dispatch(loadProducts({limit: 5}));
-  }, [])
+    dispatch(loadProducts({limit: currentLimit}));
+  }, [currentLimit]);
 
   return (
-    <div className='product-wrapper'>
-      {isLoading && (
-        <h2 style={{ color: 'red' }}>LOADING...</h2>
-      )}
-      {
-        !isLoading && products.length && // may or may not
-        products.map(el => (
-          <Product
-            key={el.id}
-            product={el}
-            onCartClick={() => dispatch(toggleItemInCart(el.id))}
-            onWishlistClick={() => dispatch(toggleItemInWishlist(el.id))}
-            isInCart={productsInCart.includes(el.id)}
-            isInWishlist={productsInWishlist.includes(el.id)}
-          />
-        ))}
-    </div>
+    <>
+      <div className='product-wrapper'>
+        {isLoading && (
+          <h2 style={{ color: 'red' }}>LOADING...</h2>
+        )}
+        {
+          !isLoading && products.length && // may or may not
+          products.map(el => (
+            <Product
+              key={el.id}
+              product={el}
+              onCartClick={() => dispatch(toggleItemInCart(el.id))}
+              onWishlistClick={() => dispatch(toggleItemInWishlist(el.id))}
+              isInCart={productsInCart.includes(el.id)}
+              isInWishlist={productsInWishlist.includes(el.id)}
+            />
+          ))}
+
+      </div>
+      {products.length < 20 && <button onClick={() => setCurrentLimit(prev => prev += LIMIT_STEP)}>load more</button>}
+    </>
   )
 }
