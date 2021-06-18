@@ -14,9 +14,9 @@ export const Products = () => {
   const { products, isLoading } = useSelector(({productsReducer: productsObj }) => productsObj) // rename by the way
   const { productsInCart } = useSelector(store => store.cart);
   const { productsInWishlist } = useSelector(store => store.wishlist);
-  const [currentLimit, setCurrentLimit] = useState(LIMIT_STEP);
-  const history = useHistory();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const [currentLimit, setCurrentLimit] = useState(LIMIT_STEP);
 
   // change by redux-thunk
   // const fetchProductsData = async () => {

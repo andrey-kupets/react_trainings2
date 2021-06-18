@@ -456,19 +456,20 @@ const App = () => {
           <Route path='/wishlist'>
             <div>wishlist</div>
           </Route>
+
+          <Route path='/trainings'>
+            <div>
+              <h1>Rest Trainings</h1>
+              <h2>{counter}</h2>
+              <button onClick={() => dispatch(random(Math.random()))}>random</button>
+              <button onClick={() => dispatch(inc())}>+</button>
+              <button onClick={() => dispatch(dec())}>-</button>
+              <button onClick={() => dispatch(reset())}>reset</button>
+
+              {!!(counter % 2) && <PhotosList/>}
+            </div>
+          </Route>
         </Switch>
-
-
-        <div>
-          <h1>Rest Trainings</h1>
-          <h2>{counter}</h2>
-          <button onClick={() => dispatch(random(Math.random()))}>random</button>
-          <button onClick={() => dispatch(inc())}>+</button>
-          <button onClick={() => dispatch(dec())}>-</button>
-          <button onClick={() => dispatch(reset())}>reset</button>
-
-          {!!(counter % 2) && <PhotosList/>}
-        </div>
       </div>
     </Router>
   )
