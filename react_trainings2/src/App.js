@@ -459,7 +459,7 @@ const App = () => {
           <Route path='/products' exact>
             <Products/>
           </Route>
-          {/*<hr/>*/}
+
           <Route path='/products/:id'>
             <ProductDetails/>
           </Route>
