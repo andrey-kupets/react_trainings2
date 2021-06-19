@@ -1,12 +1,9 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
-import {
-  BrowserRouter as Router,
-  useHistory
-} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 import {loadProducts, toggleItemInCart, toggleItemInWishlist} from "../redux/action-creators";
-import { Product } from "./Product";
+import {Product} from "./Product";
 
 const LIMIT_STEP = 5;
 
@@ -15,7 +12,7 @@ export const Products = () => {
   const { productsInCart } = useSelector(store => store.cart);
   const { productsInWishlist } = useSelector(store => store.wishlist);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useHistory(); // pass to the product image to be able add cart/wishlist items w/o entering a single product component
   const [currentLimit, setCurrentLimit] = useState(LIMIT_STEP);
 
   // change by redux-thunk
@@ -46,8 +43,11 @@ export const Products = () => {
         {
           !isLoading && products.length && // may or may not
           products.map(el => (
-            <div key={el.id} className='product-item' onClick={() => history.push(`/products/${el.id}`)}>
+            <div key={el.id} className='product-item'
+                 // onClick={() => history.push(`/products/${el.id}`)} // entering in product component
+            >
               <Product
+
                 product={el}
                 onCartClick={() => dispatch(toggleItemInCart(el.id))}
                 onWishlistClick={() => dispatch(toggleItemInWishlist(el.id))}

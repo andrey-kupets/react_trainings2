@@ -435,6 +435,21 @@ const App = () => {
     <Router>
       <div>
         <Header/>
+        <ul>
+          <li>
+            <Link to="/products">products</Link>
+          </li>
+          <li>
+            <Link to='/wishlist'>wishlist</Link>
+          </li>
+          <li>
+            <Link to='/cart'>cart</Link>
+          </li>
+          <li>
+            <Link to='/trainings'>trainings</Link>
+          </li>
+        </ul>
+
 
         <Switch>
           <Route path='/' exact>
