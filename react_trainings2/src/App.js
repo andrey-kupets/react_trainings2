@@ -346,7 +346,29 @@
 // export default App;
 
 // 3. REACT HOOKS
-// import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
+// import React, {memo, useCallback, useEffect, useMemo, useReducer, useState} from "react";
+//
+// const initialState = {
+//   counter4: 0
+// }
+//
+// const reducer = (state, action) => {
+//   switch (action.type) {
+//     case 'INC': return {
+//       ...state,
+//       counter4: state.counter4 + 1
+//     }
+//     case 'DEC': return {
+//       ...state,
+//       counter4: state.counter4 - 1
+//     }
+//     case 'RESET': return {
+//       ...state,
+//       counter4: 0
+//     }
+//     default: return state;
+//   }
+// }
 //
 // const fn = (a, b) => {
 //   console.log('called');
@@ -362,6 +384,7 @@
 //   const [counter, setCounter] = useState(0);
 //   const [counter2, setCounter2] = useState(2);
 //   const [counter3, setCounter3] = useState(0);
+//   const [state, dispatch] = useReducer(reducer, initialState);
 //
 //   const inc = () => {
 //     // setTimeout(() => { // clearly seen the difference in common & cb styles of setState using
@@ -398,6 +421,11 @@
 //       <button onClick={inc}>{counter}</button>
 //       <button onClick={inc2}>{counter2}</button>
 //       <button onClick={inc3}>{counter3}cb</button>
+//       <hr/>
+//       <button onClick={() => dispatch({type: 'INC' })}>useRed +</button>
+//       <button onClick={() => dispatch({type: 'DEC' })}>useRed -</button>
+//       <button onClick={() => dispatch({type: 'RESET' })}>useRed reset</button>
+//       <h1>useReducer {state.counter4}</h1>
 //
 //       {/*<Child/>*/}
 //       <Child inc={inc3}/>
