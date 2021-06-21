@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
     case SET_PRODUCTS: return {
       ...state,
       products: action.payload,
-      // isLoading: false // may not remove isLoading from END-action
+      // isLoading: false // may leave this field, not removing isLoading from END-action
     };
     case START_PRODUCTS_LOADING: return {...state, isLoading: true};
     case END_PRODUCTS_LOADING: return {...state, isLoading: false};
