@@ -24,6 +24,7 @@ const reducer = (state = initialState, action) => {
     case REMOVE_FROM_FIRING: return {
       ...state,
       employeesToFiring: state.employeesToFiring.filter(el => el !== action.payload)
+      // employeesToFiring: [...state.employeesToFiring.filter(el => el !== action.payload)] // the same
     }
 
     default:
