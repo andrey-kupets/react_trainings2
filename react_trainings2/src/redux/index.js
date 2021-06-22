@@ -9,11 +9,11 @@ import {
 import thunk from "redux-thunk";
 
 const logger = (store) => (next) => (action) => {
-  console.log('prev state', store.getState()) // 1 show that the process chain is synchronous
+  // console.log('prev state', store.getState()) // 1 show that the process chain is synchronous
 
   // console.log('action', action)
   let result = next(action);
-  console.log('next state', store.getState()) // 2 show that the process chain is synchronous
+  // console.log('next state', store.getState()) // 2 show that the process chain is synchronous
   return result;
 };
 
@@ -53,7 +53,6 @@ const persister = (store) => (next) => (action) => {
 //
 //   return next(action);
 // };
-
 const middlewares = [thunk, protectCounter, logger,  persister];
 
 export const store = createStore(

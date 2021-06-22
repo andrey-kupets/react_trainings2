@@ -12,13 +12,23 @@ export const Header = () => {
 
     const addToCartSum = useMemo(() => {
       return products
-        .filter(el => productsInCart.includes(el.id))
-        .reduce((acc, el) => acc += el.price, 0);
+        // .filter(el => productsInCart.includes(el.id))
+        // .reduce((acc, el) => acc += el.price, 0);
+
+        .reduce((acc, el) => { // done by one method
+          // if (productsInCart.includes(el.id)) {
+          //   acc += el.price;
+          // }
+
+          return productsInCart.includes(el.id) ? acc += el.price : acc;
+        },0);
     }, [products, productsInCart]);
+
     const addToWishlistSum = useMemo(() => {
-      return products
-        .filter(el => productsInWishlist.includes(el.id))
-        .reduce((acc, el) => acc += el.price, 0);
+      return products.reduce((acc, el) => productsInWishlist.includes(el.id) ? acc += el.price : acc, 0); // by one string
+
+      // .filter(el => productsInWishlist.includes(el.id))
+        // .reduce((acc, el) => acc += el.price, 0);
     }, [products, productsInWishlist]);
 
     return (

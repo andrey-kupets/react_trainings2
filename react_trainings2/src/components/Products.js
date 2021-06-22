@@ -47,7 +47,6 @@ export const Products = () => {
                  // onClick={() => history.push(`/products/${el.id}`)} // entering in product component
             >
               <Product
-
                 product={el}
                 onCartClick={() => dispatch(toggleItemInCart(el.id))}
                 onWishlistClick={() => dispatch(toggleItemInWishlist(el.id))}
