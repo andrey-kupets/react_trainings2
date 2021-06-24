@@ -31,8 +31,14 @@ const loadProducts = (params) => async (dispatch, getState) => {
     !hasItems && dispatch(startProductsLoading());
     const rawData = await fetch(`https://fakestoreapi.com/products?${qsHelper(params)}`);
     const jsonData = await rawData.json();
+
     dispatch(setProducts(jsonData));
     // dispatch(setProducts(jsonData.filter(el => el.price > 100))); // as example of logic applying at the action...
+
+    // by pure promise
+    // fetch(`https://fakestoreapi.com/products?${qsHelper(params)}`)
+    //   .then(raw => raw.json())
+    //   .then(data => dispatch(setProducts(data)))
   } catch (e) {
     console.error(e);
   } finally {
